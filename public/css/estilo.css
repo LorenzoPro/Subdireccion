@@ -1,0 +1,23 @@
+body{
+}
+section.inicio{
+  height: 100vh;
+  width: 100%;
+  background-image: url('../img/b1.jpg');
+  border-color: red;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  text-align: center;
+  position: relative;
+}
+section.imagen > img{
+  background-size: cover;
+}
+div.imagen{
+
+}

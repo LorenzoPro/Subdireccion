@@ -1,0 +1,82 @@
+body{
+overflow: hidden;
+height: 100vh;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,353895+100 */
+background-color:   #f2f2f2;
+}
+
+#midLogo{
+  height: 45px;
+}
+
+.inicia-sesion{
+  font-size: 1.5rem;
+  color: #353895;
+  font-family: Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-weight: 700;
+  line-height: 2rem;
+  margin-bottom: 20px;
+}
+
+.input-style{
+  font-family: Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  border: none;
+  border-bottom: 1px solid #353895;
+  border-radius: 0px !important;
+  background-color: transparent;
+  font-size: 1.3rem !important;
+  font-weight: 500;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  box-shadow: none;
+  outline: none !important;
+}
+
+.form-control:focus{
+    border-color:#353895;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+.container > .input.form-control:focus {
+  outline: none !important;
+}
+
+.card{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  background-color: white;
+  border-radius: 5px;
+  top: 18vh;
+
+}
+
+.posicion{
+  top: 10vh;
+}
+
+#boton {
+  border-radius: 0px;
+  background-color: #353895;
+  border: none;
+  color: white;
+  margin-bottom: 10px;
+}
+.diva:hover{
+  color: #353895;
+}
+
+i.glyphicon{
+  color: #ccc;
+}
+
+.invalid-feedback{
+  color: #e74c3c;
+  margin-top: 5px;
+}
