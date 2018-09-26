@@ -81,14 +81,9 @@
           <li role="presentation"><a href="#">Actualizacion Docente</a></li>
         </ul>
       </li>
-    <li role="dropdown"><a href="{{ url('/administracion/stats') }}"><i class="glyphicon glyphicon-folder-open padRight"></i>Desarrollo profesional</a></li>
-    <li role="presentation"><a href="{{ url('/administracion/grupos') }}"><i class="fas fa-users padRight"></i>Ciencias Basicas</a></li>
-    <li role="presentation"><a href="{{ url('/administracion/talleres')}}"><i class="fas fa-book padRight"></i>Div. ISC</a></li>
-    <li role="presentation"><a href="{{ url('/administracion/alumnos') }}"><i class="fas fa-user padRight"></i>Div. IMCT</a></li>
-    <li role="presentation"><a href="{{ url('/administracion/alumnos') }}"><i class="fas fa-user padRight"></i>Div. IGTM</a></li>
-    <li role="presentation"><a href="{{ url('/administracion/alumnos') }}"><i class="fas fa-user padRight"></i>Div. II</a></li>
-    <li role="presentation"><a href="{{ url('/administracion/alumnos') }}"><i class="fas fa-user padRight"></i>Div. IGEM</a></li>
-    <li role="presentation"><a href="{{ url('/administracion/alumnos') }}"><i class="fas fa-user padRight"></i>Div. CP</a></li>
+    <li role="dropdown"><a href="{{ url('/administracion/stats') }}"><i class="glyphicon glyphicon-folder-open padRight"></i>Indicadores</a></li>
+    <li role="presentation"><a href="{{ url('/administracion/usuarios') }}"><i class="fas fa-users padRight"></i>Usuarios</a></li>
+    <li role="presentation"><a href="{{ url('/administracion/carreras') }}"><i class="fas fa-users padRight"></i>Carreras</a></li>
   </ul>
 
 </nav>

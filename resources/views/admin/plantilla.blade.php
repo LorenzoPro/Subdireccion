@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Esta es una prueba</title>
+    <title>@yield('Titulo')</title>
 
     <!-- Estilos -->
     <link rel="stylesheet" href="{{ asset('css/admincss.css') }}">
@@ -18,6 +18,8 @@
   <body>
     <div class="col-md-10 col-md-offset-2">
       @yield('contenido')
+      @yield('usuarios')
+      @yield('carreras')
 
     </div>
 
@@ -29,5 +31,6 @@
 
         @yield('scripts')
         @yield('script-porcentajes')
+        @yield('jQueryUsuarios')
   </body>
 </html>

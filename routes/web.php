@@ -19,6 +19,12 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/','CalidadController@index');
   Route::resource('admin','CalidadController');
 
+  Route::get('/usuarios','UserController@index');
+  Route::resource('usuarios','UserController');
+
+  Route::get('/carreras','CarrerasController@index');
+  Route::resource('carreras','CarrerasController');
+
 });
 
 Auth::routes();
