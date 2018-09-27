@@ -81,7 +81,7 @@
           <li role="presentation"><a href="#">Actualizacion Docente</a></li>
         </ul>
       </li>
-    <li role="dropdown"><a href="{{ url('/administracion/stats') }}"><i class="glyphicon glyphicon-folder-open padRight"></i>Indicadores</a></li>
+    <li role="dropdown"><a href="{{ url('/administracion/indicadores') }}"><i class="glyphicon glyphicon-folder-open padRight"></i>Indicadores</a></li>
     <li role="presentation"><a href="{{ url('/administracion/usuarios') }}"><i class="fas fa-users padRight"></i>Usuarios</a></li>
     <li role="presentation"><a href="{{ url('/administracion/carreras') }}"><i class="fas fa-users padRight"></i>Carreras</a></li>
   </ul>

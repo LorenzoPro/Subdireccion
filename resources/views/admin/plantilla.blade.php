@@ -20,6 +20,7 @@
       @yield('contenido')
       @yield('usuarios')
       @yield('carreras')
+      @yield('indicadores')
 
     </div>
 

@@ -25,6 +25,9 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/carreras','CarrerasController@index');
   Route::resource('carreras','CarrerasController');
 
+  Route::get('/indicadores','IndicadoresController@index');
+  Route::resource('indicadores','IndicadoresController');
+
 });
 
 Auth::routes();
