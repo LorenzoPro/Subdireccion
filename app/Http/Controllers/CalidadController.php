@@ -12,7 +12,11 @@ class CalidadController extends Controller
         $this->middleware('auth');
     }
     public function index(){
+      $indicador=\DB::table('indicadores')
+        ->orderBy('id_indicador')
+        ->get();
 
-      return view('admin.calidad');
+      return view('admin.calidad')
+        ->with('indicadores', $indicador);
     }
 }

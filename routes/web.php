@@ -28,6 +28,9 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/indicadores','IndicadoresController@index');
   Route::resource('indicadores','IndicadoresController');
 
+  Route::get('/metas','MetasController@index');
+  Route::resource('metas','MetasController');
+
 });
 
 Auth::routes();
