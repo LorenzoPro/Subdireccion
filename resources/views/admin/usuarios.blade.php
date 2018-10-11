@@ -36,9 +36,9 @@
       <tbody>
         <tr>
           <th>
-            <table class="table table-striped">
-              <thead>
-                <tr>
+            <table class="table table-condensed">
+              <thead class="">
+                <tr class="info">
                   <!-- <th>#</th> -->
                   <th>Nombre</th>
                   <th>Correo</th>

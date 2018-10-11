@@ -301,3 +301,6 @@ border-radius: 5px;
 li.dropdown > a{
   padding-top: 7% !important;
 }
+thead.table-dark{
+  background-color: #333;
+}

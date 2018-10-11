@@ -22,20 +22,37 @@
 @section('contenido')
 <div class="row">
   <div class="title" style="text-align: center; padding-top:80px;">Indicadores de Calidad</div>
-  <div class="subtitle" style="text-align: center">Alumnos y alumnas en tutorias.</div>
+  <div class="subtitle" style="text-align: center"></div>
 </div>
-<div class="row">
-  <div class="col-md-4 col-md-offset-4">
-    <label>Seleccionar Indicador</label><br>
-    <select class="cate form-control" name="id_categoria" id="indicador">
-      @forelse($indicadores as $ind)
-        <option value="{{$ind->id_indicador}}" data-id="{{ $ind->id_indicador }}" class="indicador">{{$ind->nombre}}</option>
-      @empty
-        <option value=""></option>
-      @endforelse
-    </select>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 col-md-offset-1">
+      <label>Seleccionar Indicador</label><br>
+      <select class="cate form-control" name="id_indicador" id="indicador">
+        @forelse($indicadores as $ind)
+          <option value="{{$ind->id_indicador}}" data-id="{{ $ind->id_indicador }}" data-id2="{{$ind->id_indicador}}" class="indicador">{{$ind->nombre}}</option>
+        @empty
+          <option value=""></option>
+        @endforelse
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label>Seleccionar periodo</label><br>
+      <select class=" form-control" name="periodo" id="periodo">
+
+          <option value="Enero-Julio" data-periodo="Enero-Julio" class="periodo">Enero-Julio</option>
+
+          <option value="Agosto-Diciembre" data-periodo="Agosto-Diciembre" class="periodo">Agosto-Diciembre</option>
+
+      </select>
+    </div>
   </div>
 </div>
+
+
+<button type="button" class="btnagregar navbar-right btnCirculo2" data-toggle="modal" data-target=".datos">
+    <i class="glyphicon glyphicon-plus"></i>
+</button>
 
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
     <i class="glyphicon glyphicon-plus"></i>
@@ -45,7 +62,7 @@
     <div class="col-md-3">
       <div class="bg-color-green inicio">
         <h4 class="titulo-inicio">Total de alumnos(as) en tutorias</h4>
-        <span class="titulo-inicio titulo-number count">943</span>
+        <span class="titulo-inicio titulo-number count" id="Thombres">0</span>
       </div>
 
       <div class="bg-color-blue inicio">
@@ -120,6 +137,7 @@
 
             <div class="form-group">
                 {{ Form::submit('Aceptar',array('class'=>'btn btn-primary','data-toggle'=>'modal','data-target'=>'.datos')  )}}
+                <button type="button" class="contestar btn btn-success">Enviar</button>
             </div>
           </fieldset>
           {{ Form::close() }}
@@ -144,17 +162,30 @@
       <div class="modal-body">
         <div class="card-body">
 
-          {{ Form::open (array('url'=>'/administracion/carreras','files'=>"true") )}}
-          <fieldset>
-            <div class="form-group">
-              <label for="">Nombre</label>
-                  {{ Form::text('nombre','',array('class'=>'form-control','placeholder'=>'Nombre')  )}}
+          @forelse($carreras as $car)
+
+          {{ Form::open (array('url'=>'/administracion/calidad','id'=>"Formdatos". $car->id_carrera) )}}
+            <input type="text" name="id_carrera" class="id_carrera" value="{{$car->id_carrera}}">
+
+            <div class="from-group">
+                <input type="text" name="id_indicador" class="id_indicador" value="1"><br>
+              <label for="">{{$car->nombre}}</label><br>
+              hombres
+              <input type="text" name="hombres" value=""><br>
+              mujeres
+              <input type="text" name="mujeres" value=""><br>
+              hombres2
+              <input type="text" name="hombres2" value=""><br>
+              mujeres2
+              <input type="text" name="mujeres2" value=""><br>
             </div>
-            <div class="form-group">
-                {{ Form::submit('Aceptar',array('class'=>'btn btn-primary')  )}}
-            </div>
-          </fieldset>
+            <button type="button" class="contestar btn btn-success">Enviar</button>
+
           {{ Form::close() }}
+
+          @empty
+            <p>Sin registros</p>
+          @endforelse
 
         </div>
 
@@ -172,15 +203,60 @@
   <script>
 
   $(document).ready(function(){
+    var id=0;
+    var periodo=0;
+    var anio=1;
     $(".indicador").on("click", function(){
-      var id = $(this).data('id');
+       id = $(this).data('id');
 
-      //var em=$(this).data('email');
+      var id2 = $(this).data('id2');
       $("#id_indicador").val(id);
+      $(".id_indicador").val(id2);
+      recargar();
+
+
 
     });
-  });
+    $(".periodo").on("click", function(){
+      var id2 = id;
+      periodo = $(this).data('periodo');
 
+      console.log(id);
+      recargar();
+
+    });
+    function recargar(){
+
+      $.ajax({
+        url:'/administracion/calidad/Graficas/'+id+"/"+periodo,
+        method:'get',
+
+      }).done(function(res){
+        $('.subtitle').empty();
+        var arr=JSON.parse(res);
+        var n=arr[0].nombre;
+        console.log(arr);
+        $('.subtitle').append(n);
+
+      });
+    }
+
+    $('.contestar').on("click",function(){
+
+      var form = $(this).parent('form');
+      $.ajax({
+        url:$(this).parent('form').attr('action'),
+        method:'POST',
+        data:$(this).parent('form').serialize()
+      }).done(function(res){
+        console.log(res);
+        var x = parseInt(res);
+        if(x==1){
+          form.fadeOut(200);
+        }
+      });
+      });
+  });
 
 
   var ctxline = document.getElementById("myChartline");

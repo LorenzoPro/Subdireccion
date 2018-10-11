@@ -40,18 +40,18 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Area Responsable</th>
-                  <th>Objetivo</th>
-                  <th>Editar</th>
-                  <th>Eliminar</th>
+                  <th>NOMBRE</th>
+                  <th>AREA</th>
+                  <th>OBJETIVO</th>
+                  <th>EDITAR</th>
+                  <th>ELIMINAR</th>
                 </tr>
               </thead>
               <tbody>
                 @forelse($indicadores as $ind)
                   <tr>
 
-                    <th>{{ $ind->nombre }}</th>
+                    <th >{{ $ind->nombre }}</th>
                     <th>{{ $ind->area }}</th>
                     <th>{{ $ind->objetivo }}</th>
                     <th>

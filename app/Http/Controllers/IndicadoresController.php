@@ -20,6 +20,8 @@ class IndicadoresController extends Controller
     return view('admin.indicadores')
       ->with('titulo', $titulo)
       ->with('indicadores', $indicador);
+
+    
   }
   //insertar
   public function store(Request $req){
