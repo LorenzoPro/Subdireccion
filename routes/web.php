@@ -38,6 +38,7 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::post('/calidad/ajax','CalidadController@ajax');
   //Route::get('/calidad/Graficas','CalidadController@Graficas');
   Route::get('/calidad/Graficas/{id}/{periodo}','CalidadController@Graficas');
+  Route::get('/calidad/nombre/{id}','CalidadController@nombre');
 
 
 });

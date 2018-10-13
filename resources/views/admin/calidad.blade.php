@@ -21,13 +21,13 @@
 
 @section('contenido')
 <div class="row">
-  <div class="title" style="text-align: center; padding-top:80px;">Indicadores de Calidad</div>
+  <div class="title" style="text-align: center; ">Indicadores de Calidad</div>
   <div class="subtitle" style="text-align: center"></div>
 </div>
-<div class="container">
+
   <div class="row">
-    <div class="col-md-3 col-md-offset-1">
-      <label>Seleccionar Indicador</label><br>
+    <div class="col-md-4">
+      <h4 class="seleccionadores">Indicadores</h4>
       <select class="cate form-control" name="id_indicador" id="indicador">
         @forelse($indicadores as $ind)
           <option value="{{$ind->id_indicador}}" data-id="{{ $ind->id_indicador }}" data-id2="{{$ind->id_indicador}}" class="indicador">{{$ind->nombre}}</option>
@@ -36,18 +36,20 @@
         @endforelse
       </select>
     </div>
-    <div class="col-md-3">
-      <label>Seleccionar periodo</label><br>
+    <div class="col-md-4">
+      <h4 class="seleccionadores">Periodo</h4>
       <select class=" form-control" name="periodo" id="periodo">
-
-          <option value="Enero-Julio" data-periodo="Enero-Julio" class="periodo">Enero-Julio</option>
-
-          <option value="Agosto-Diciembre" data-periodo="Agosto-Diciembre" class="periodo">Agosto-Diciembre</option>
-
+          <option value="0" data-periodo="0" class="periodo">Enero-Julio</option>
+          <option value="1" data-periodo="1" class="periodo">Agosto-Diciembre</option>
       </select>
     </div>
+    <div class="col-md-3">
+      <h4 class="seleccionadores">Año</h4>
+      <input type="text" class="yearpicker"  name="anio"  style="width: 100%;" value="">
+    </div>
+    <button type="submit" name="btnir" class="btnagregar2 btnir">IR</button>
   </div>
-</div>
+
 
 
 <button type="button" class="btnagregar navbar-right btnCirculo2" data-toggle="modal" data-target=".datos">
@@ -62,12 +64,12 @@
     <div class="col-md-3">
       <div class="bg-color-green inicio">
         <h4 class="titulo-inicio">Total de alumnos(as) en tutorias</h4>
-        <span class="titulo-inicio titulo-number count" id="Thombres">0</span>
+        <span class="titulo-inicio titulo-number count variable1" id="Thombres">0</span>
       </div>
 
       <div class="bg-color-blue inicio">
         <h4 class="titulo-inicio">Total de alumnos(as) inscritas(as)</h4>
-        <span class="titulo-inicio titulo-number count">262</span>
+        <span class="titulo-inicio titulo-number variable2">0</span>
       </div>
     </div>
     <div class="col-md-3 graph">
@@ -130,8 +132,8 @@
             <div class="form-group">
               <label for="">Periodo</label>
               {{  Form::select('periodo',[
-              'Enero-Julio' => 'Enero-Julio',
-              'Agosto-Diciembre' => 'Agosto-Diciembre'],null, ['class'=>'form-control']  )}}
+              '0' => 'Enero-Julio',
+              '1' => 'Agosto-Diciembre'],null, ['class'=>'form-control']  )}}
             </div>
             {{ Form::hidden('id_indicador','1',array('class'=>'form-control','id'=>'id_indicador')  )}}
 
@@ -203,16 +205,21 @@
   <script>
 
   $(document).ready(function(){
-    var id=0;
+    var id=1;
     var periodo=0;
     var anio=1;
     $(".indicador").on("click", function(){
        id = $(this).data('id');
+       periodo=periodo
+
+
+
 
       var id2 = $(this).data('id2');
       $("#id_indicador").val(id);
       $(".id_indicador").val(id2);
-      recargar();
+
+
 
 
 
@@ -222,7 +229,17 @@
       periodo = $(this).data('periodo');
 
       console.log(id);
+
+
+    });
+    $(".btnir").on("click",function(){
+      //console.log(id,periodo);
+      periodo=periodo;
+      id=id;
       recargar();
+      nombre();
+      $('.subtitle').fadeOut(1);
+      $('.subtitle').fadeIn(1000);
 
     });
     function recargar(){
@@ -232,10 +249,122 @@
         method:'get',
 
       }).done(function(res){
+        $('.variable1').empty();
+        $('.variable2').empty();
+
+        var arr=JSON.parse(res);
+        var hombres=arr[0];
+        var mujeres=arr[1];
+        var totalv1=arr[2];
+        var hombres2=arr[3];
+        var mujeres2=arr[4];
+        var totalv2=arr[5];
+        var h=hombres[0].suma;
+        var h2=hombres2[0].suma2;
+        var m=mujeres[0].suma;
+        var m2=mujeres2[0].suma2;
+        var tv1=totalv1[0].totalV1;
+        var tv2=totalv2[0].totalV2;
+
+        console.log(res);
+        $('.variable1').append(tv1);
+          if (h==null) {
+            $('.variable1').append(0);
+          }
+        $('.variable2').append(tv2);
+          if (h2==null) {
+            $('.variable2').append(0);
+          }
+////////////////////////////////////////////////////////////////////////////////
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Mujeres", "Hombres"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [m, h],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+///////////////////////////////////////////////////////////////////////////////
+        var ctx2 = document.getElementById("myChart2");
+        var myChart2 = new Chart(ctx2, {
+          type: 'doughnut',
+          data: {
+            labels: ["Mujeres", "Hombres"],
+            datasets: [{
+              label: '# of Votes',
+              data: [m2, h2],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+              }]
+            }
+          }
+        });
+
+      });
+    }
+    //////////////////////////////////////////FUNCION PARA EL NOMBRE QUE PROBABLEMENTE SE QUITE///////////////
+    function nombre(){
+      $.ajax({
+        url:'/administracion/calidad/nombre/'+id,
+        method:'get',
+
+      }).done(function(res){
         $('.subtitle').empty();
         var arr=JSON.parse(res);
         var n=arr[0].nombre;
-        console.log(arr);
+        console.log(n);
         $('.subtitle').append(n);
 
       });
@@ -369,7 +498,7 @@ var myChart = new Chart(ctx, {
         labels: ["hombres", "Mujeres"],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19],
+            data: [0, 0],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -401,41 +530,44 @@ var myChart = new Chart(ctx, {
 });
 var ctx2 = document.getElementById("myChart2");
 var myChart2 = new Chart(ctx2, {
-    type: 'doughnut',
-    data: {
-        labels: ["hombres", "Mujeres"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
+  type: 'doughnut',
+  data: {
+    labels: ["Mujeres", "Hombres"],
+    datasets: [{
+      label: '# of Votes',
+      data: [0, 0],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero:true
         }
+      }]
     }
+  }
 });
+
+
+
 var ctx3 = document.getElementById("myChart3");
 var myChart3 = new Chart(ctx3, {
     type: 'doughnut',

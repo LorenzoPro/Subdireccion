@@ -70,30 +70,67 @@ class CalidadController extends Controller
           }
     }
     public function Graficas($id,$periodo){
+      //SUMA DE LA COLUMNA DE HOMBRES
       $hombres=\DB::select("
-      SELECT SUM(hombres) FROM datos
+      SELECT SUM(hombres) as suma FROM datos
       INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
-      INNER JOIN metas on metas.id_indicador = datos.id_indicador and periodo='Enero-Julio' and datos.id_indicador=".$id."
+      INNER JOIN metas on metas.id_indicador = datos.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo." and datos.id_indicador=".$id."
       ");
-
+      //SUMA DE LA COLUMNA DE HOMBRES
+      $hombres2=\DB::select("
+      SELECT SUM(hombres2) as suma2 FROM datos
+      INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
+      INNER JOIN metas on metas.id_indicador = datos.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo." and datos.id_indicador=".$id."
+      ");
+      //SUMA DE LA COLUMNA DE MUJERES
       $mujeres=\DB::select("
-      SELECT SUM(mujeres) FROM datos
+      SELECT SUM(mujeres) as suma FROM datos
       INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
-      INNER JOIN metas on metas.id_indicador = datos.id_indicador and periodo=".$periodo." and datos.id_indicador='3'
+      INNER JOIN metas on metas.id_indicador = datos.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo." and datos.id_indicador=".$id."
+      ");
+      $mujeres2=\DB::select("
+      SELECT SUM(mujeres2) as suma2 FROM datos
+      INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
+      INNER JOIN metas on metas.id_indicador = datos.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo." and datos.id_indicador=".$id."
+      ");
+      //TOTAL DE HOMBRES Y MUJERES DE LA VARIABLE 1
+      $totalV1=\DB::select("
+      select sum(hombres)+sum(mujeres) as totalV1 from datos
+      INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
+      INNER JOIN metas on metas.id_indicador = datos.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo." and datos.id_indicador=".$id."
+      ");
+      //TOTAL DE HOMBRES Y MUJERES DE LA VARIABLE 1
+      $totalV2=\DB::select("
+      select sum(hombres2)+sum(mujeres2) as totalV2 from datos
+      INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
+      INNER JOIN metas on metas.id_indicador = datos.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo." and datos.id_indicador=".$id."
       ");
 
-      $todo=$hombres;
 
+      $arreglo[]=$hombres;
+      /*$valores1="";
+      $valores2="";
 
+      $valores1=$valores1 . '"' .$hombres{0}->suma.'",';
+      $valores2=$valores2 . '"' .$mujeres{0}->suma.'",';
+      $todo=$valores1. "#" .$valores2;*/
+      //$arreglo.push('Hombres',$hombre);
+      //$arreglo.push('Mujeres',$mujeres);
+    //  array_push($arreglo,$hombres);
+      array_push($arreglo,$mujeres,$totalV1,$hombres2,$mujeres2,$totalV2);
+      return json_encode($arreglo);
 
+    }
+    public function nombre($id){
       $nombre=\DB::select("
       select nombre from indicadores where id_indicador=".$id."
       ");
-
-
       return json_encode($nombre);
-
-
-
     }
 }
