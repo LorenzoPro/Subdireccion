@@ -12,6 +12,6 @@ class Indicador extends Model
   protected $table='indicadores';
   //campos que se pueden manipular
   protected $fillable=[
-    'id_indicador','nombre','area','objetivo'
+    'id_indicador','nombre','area','objetivo','variable1','variable2'
   ];
 }

@@ -21,7 +21,7 @@
 
 @section('contenido')
 <div class="row">
-  <div class="title" style="text-align: center; ">Indicadores de Calidad</div>
+  <div class="title" style="text-align: center; ">Indicadores de las divisiones academicas</div>
   <div class="subtitle" style="text-align: center"></div>
 </div>
 
@@ -45,8 +45,9 @@
     </div>
     <div class="col-md-3">
       <h4 class="seleccionadores">Año</h4>
-      <input type="text" class="yearpicker"  name="anio"  style="width: 100%;" value="">
+      <input type="text" class="yearpicker anio" id="yearpicker" name="anio" style="width: 100%;" value="">
     </div>
+
     <button type="submit" name="btnir" class="btnagregar2 btnir">IR</button>
   </div>
 
@@ -62,25 +63,26 @@
 
   <div class="row">
     <div class="col-md-3">
-      <div class="bg-color-green inicio">
-        <h4 class="titulo-inicio">Total de alumnos(as) en tutorias</h4>
+      <div class="bg-color-red inicio">
+        <h4 class="titulo-inicio" id="variable1">Total de alumnos(as) en tutorias</h4>
         <span class="titulo-inicio titulo-number count variable1" id="Thombres">0</span>
       </div>
 
       <div class="bg-color-blue inicio">
-        <h4 class="titulo-inicio">Total de alumnos(as) inscritas(as)</h4>
+        <h4 class="titulo-inicio" id="variable2">Total de alumnos(as) inscritas(as)</h4>
         <span class="titulo-inicio titulo-number variable2">0</span>
       </div>
     </div>
     <div class="col-md-3 graph">
-      <h4 class="titleGraphs">Tutorias</h4>
+      <h4 class="titleGraphs titg">Tutorias</h4>
       <canvas id="myChart" width="400" height="400"></canvas>
     </div>
     <div class="col-md-3 graph">
-      <h4 class="titleGraphs">Inscritos</h4>
+      <h4 class="titleGraphs titg2" >Inscritos</h4>
       <canvas id="myChart2" width="400" height="400"></canvas>
     </div>
   </div>
+
 
   <div class="row">
     <div class="col-md-6 graphbar">
@@ -207,37 +209,48 @@
   $(document).ready(function(){
     var id=1;
     var periodo=0;
-    var anio=1;
+    var anio = 2018;
+    console.log(id);
+    $.ajax({
+      url:'/administracion/calidad/index/'+id+"/"+periodo+"/"+anio,
+      method:'get',
+    }).done(function(res){
+
+    });
+
+
+
+
+
     $(".indicador").on("click", function(){
        id = $(this).data('id');
-       periodo=periodo
-
-
-
+       periodo=periodo;
+       console.log(anio);
 
       var id2 = $(this).data('id2');
       $("#id_indicador").val(id);
       $(".id_indicador").val(id2);
-
-
-
-
-
     });
+
     $(".periodo").on("click", function(){
       var id2 = id;
       periodo = $(this).data('periodo');
-
-      console.log(id);
-
-
     });
+    $('.anio').keyup(function(){
+      anio=$(this).val();
+      console.log(anio);
+    });
+
     $(".btnir").on("click",function(){
       //console.log(id,periodo);
       periodo=periodo;
       id=id;
+      anio=anio;
+      console.log(anio);
+
       recargar();
       nombre();
+      carreras();
       $('.subtitle').fadeOut(1);
       $('.subtitle').fadeIn(1000);
 
@@ -245,7 +258,7 @@
     function recargar(){
 
       $.ajax({
-        url:'/administracion/calidad/Graficas/'+id+"/"+periodo,
+        url:'/administracion/calidad/Graficas/'+id+"/"+periodo+"/"+anio,
         method:'get',
 
       }).done(function(res){
@@ -268,6 +281,7 @@
 
         console.log(res);
         $('.variable1').append(tv1);
+
           if (h==null) {
             $('.variable1').append(0);
           }
@@ -353,7 +367,94 @@
         });
 
       });
+    }//llave de funcion recargar
+    var arrayCarreras=[];
+    var arrayHombres=[];
+    var arrayMujeres=[];
+    function carreras(){
+      $.ajax({
+        url:'/administracion/calidad/carreras/'+id+"/"+periodo+"/"+anio,
+        method:'get',
+
+      }).done(function(res){
+        arrayCarreras=[];
+        arrayHombres=[];
+        arrayMujeres=[];
+
+
+
+        res=res.replace(/\\/g,"");
+        res=res.replace(/"/gi,"");
+        console.log("RES: "+res);
+        var arr=res.split("#");
+        var arr2=arr[0].split(",");
+        var arr3=arr[1].split(",");
+        var arr4=arr[2].split(",");
+        console.log(arr);
+        for(var x=0;x<arr2.length-1;x++){
+          arrayCarreras.push(arr2[x].trim());
+        }
+        for(var x=0;x<arr3.length-1;x++){
+          arrayHombres.push(arr3[x].trim());
+        }
+        for(var x=0;x<arr4.length-1;x++){
+          arrayMujeres.push(arr4[x].trim());
+        }
+        var nombres=arr2[0];
+        var nombres2=arr2[1];
+        var nombres3=arr2[2];
+        var hombres1=arr2[4];
+        var hombres2=arr2[5];
+        var hombres3=arr2[6];
+
+        console.log(arrayCarreras);
+
+
+        var ctxlbar2 = document.getElementById("myChartbar2");
+        var myChartbar2 = new Chart(ctxlbar2, {
+            type: 'bar',
+            data: {
+              labels: arrayCarreras,
+              datasets: [{
+                  label: "Hombres",
+                  borderColor: 'rgb(54, 162, 235)',
+                  data: arrayHombres,
+                  backgroundColor: [
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)'
+                  ],
+              },
+              {
+                label: "Mujeres",
+                borderColor: 'rgb(255, 99, 132)',
+                data: arrayMujeres,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+              }
+
+            ]
+          },
+          options: {
+           elements: {
+               line: {
+                   tension: 0, // disables bezier curves
+               }
+           }
+       }
+      });
+      });
     }
+
     //////////////////////////////////////////FUNCION PARA EL NOMBRE QUE PROBABLEMENTE SE QUITE///////////////
     function nombre(){
       $.ajax({
@@ -362,10 +463,23 @@
 
       }).done(function(res){
         $('.subtitle').empty();
+        $('#variable1').empty();
+        $('#variable2').empty();
+        $('.titg').empty();
+        $('.titg2').empty();
         var arr=JSON.parse(res);
-        var n=arr[0].nombre;
+        var nombres=arr[0];
+        var variable1=arr[1];
+        var variable2=arr[1];
+        var n=nombres[0].nombre;
+        var v=variable1[0].variable1;
+        var v2=variable2[0].variable2;
         console.log(n);
         $('.subtitle').append(n);
+        $('#variable1').append(v);
+        $('#variable2').append(v2);
+        $('.titg').append(v);
+        $('.titg2').append(v2);
 
       });
     }
@@ -395,7 +509,7 @@
         labels: ["2012", "2013", "2014", "2015", "2016", "2017"],
         datasets: [{
             label: "My First dataset",
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 244)',
             data: [0, 10, 5,20,3, 45],
         }]
     },
@@ -407,48 +521,7 @@
      }
  }
   });
-  var ctxlbar2 = document.getElementById("myChartbar2");
-  var myChartbar2 = new Chart(ctxlbar2, {
-      type: 'bar',
-      data: {
-        labels: ["CP", "IGEM", "ISC", "II", "Electromecanica", "Electronica"],
-        datasets: [{
-            label: "Hombres",
-            borderColor: 'rgb(255, 99, 132)',
-            data: [5, 10, 5,20,3, 45],
-            backgroundColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)'
-            ],
-        },
-        {
-          label: "Mujeres",
-          borderColor: 'rgb(255, 99, 132)',
-          data: [3,8, 7,15,7, 20],
-          backgroundColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)'
-          ],
-        }
 
-      ]
-    },
-    options: {
-     elements: {
-         line: {
-             tension: 0, // disables bezier curves
-         }
-     }
- }
-  });
   var ctxlbar = document.getElementById("myChartbar");
   var myChartbar = new Chart(ctxlbar, {
       type: 'bar',

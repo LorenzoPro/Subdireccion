@@ -32,13 +32,17 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/metas','MetasController@index');
   Route::resource('metas','MetasController');
 
-  Route::get('/calidad','CalidadController@index');
+  Route::get('/calidad{id}{periodo}{anio}','CalidadController@index');
   Route::resource('calidad','CalidadController');
 
   Route::post('/calidad/ajax','CalidadController@ajax');
   //Route::get('/calidad/Graficas','CalidadController@Graficas');
-  Route::get('/calidad/Graficas/{id}/{periodo}','CalidadController@Graficas');
+  Route::get('/calidad/Graficas/{id}/{periodo}/{anio}','CalidadController@Graficas');
+  Route::get('/calidad/carreras/{id}/{periodo}/{anio}','CalidadController@carreras');
+  Route::get('/calidad/index/{id}/{periodo}/{anio}','CalidadController@index');
   Route::get('/calidad/nombre/{id}','CalidadController@nombre');
+
+
 
 
 });

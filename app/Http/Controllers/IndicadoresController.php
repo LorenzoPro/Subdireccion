@@ -21,14 +21,16 @@ class IndicadoresController extends Controller
       ->with('titulo', $titulo)
       ->with('indicadores', $indicador);
 
-    
+
   }
   //insertar
   public function store(Request $req){
     $validator = Validator::make($req->all(),[
       'nombre'=>'required|max:255',
       'area'=>'required|max:255',
-      'objetivo'=>'required|max:800'
+      'objetivo'=>'required|max:800',
+      'variable1'=>'required|max:100',
+      'variable2'=>'required|max:100'
     ]);
 
     if($validator->fails()){
@@ -39,7 +41,9 @@ class IndicadoresController extends Controller
       Indicador::create([
         'nombre'=>$req->nombre,
         'area'=>$req->area,
-        'objetivo'=>$req->objetivo
+        'objetivo'=>$req->objetivo,
+        'variable1'=>$req->variable1,
+        'variable2'=>$req->variable2
       ]);
       return redirect()->to('/administracion/indicadores')
         ->with('mensaje','Indicador Agregado');

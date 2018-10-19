@@ -25,7 +25,7 @@
 
 @section('indicadores')
 <div class="row">
-  <div class="title" style="text-align: center; padding-top:110px;">Indicadores</div>
+  <div class="title" style="text-align: center;"><i class="fas fa-file-contract padRight"></i>Indicadores</div>
   <div class="subtitle" style="text-align: center">Consulta, agrega y elimina.</div>
 </div>
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
@@ -60,6 +60,8 @@
                       data-nombre="{{  $ind->nombre  }}"
                       data-area="{{  $ind->area  }}"
                       data-objetivo="{{  $ind->objetivo  }}"
+                      data-v1="{{  $ind->variable1  }}"
+                      data-v2="{{  $ind->variable2  }}"
                       >
                         <i class="glyphicon glyphicon-pencil"></i>
                       </button>
@@ -131,6 +133,14 @@
                 <label for="">Objetivo</label>
                 <input type="text" name="objetivoEditar" id="objetivoEditar" value="" class="form-control">
               </div>
+              <div class="form-group">
+                <label for="">Variable 1</label>
+                <input type="text" name="variable1" id="variable1" value="" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="">Variable 2</label>
+                <input type="text" name="variable2" id="variable2" value="" class="form-control">
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-dagner" data-dismiss="modal">Cancelar</button>
@@ -161,11 +171,19 @@
             </div>
             <div class="form-group">
               <label for="">Area Responsable</label>
-                  {{ Form::text('area','',array('class'=>'form-control','placeholder'=>'Nombre')  )}}
+                  {{ Form::text('area','',array('class'=>'form-control','placeholder'=>'Area responsble')  )}}
             </div>
             <div class="form-group">
               <label for="">Objetivo</label>
-                  {{ Form::text('objetivo','',array('class'=>'form-control','placeholder'=>'Nombre')  )}}
+                  {{ Form::text('objetivo','',array('class'=>'form-control','placeholder'=>'Objetivo del indicador')  )}}
+            </div>
+            <div class="form-group">
+              <label for="">Variable 1</label>
+                  {{ Form::text('variable1','',array('class'=>'form-control','placeholder'=>'Variable 1')  )}}
+            </div>
+            <div class="form-group">
+              <label for="">Variable 2</label>
+                  {{ Form::text('variable2','',array('class'=>'form-control','placeholder'=>'Variable 2')  )}}
             </div>
             <div class="form-group">
                 {{ Form::submit('Aceptar',array('class'=>'btn btn-primary')  )}}
@@ -190,6 +208,8 @@
         var area=$(this).data('area');
         var obj=$(this).data('objetivo');
         var id = $(this).data('id');
+        var v1 = $(this).data('v1');
+        var v2 = $(this).data('v2');
 
 
         //var em=$(this).data('email');
@@ -197,6 +217,8 @@
         $('#nameEditar').val(nom);
         $('#areaEditar').val(area);
         $('#objetivoEditar').val(obj);
+        $('#variable1').val(v1);
+        $('#variable2').val(v2);
         $("#nomModal").text(nom);
 
       });

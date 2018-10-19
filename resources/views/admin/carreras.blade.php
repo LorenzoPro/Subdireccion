@@ -25,7 +25,7 @@
 
 @section('carreras')
 <div class="row">
-  <div class="title" style="text-align: center; padding-top:110px;">Ingenierias</div>
+  <div class="title" style="text-align: center;"><i class="fas fa-user-graduate padRight">Ingenierias</div>
   <div class="subtitle" style="text-align: center">Consulta, agrega y elimina.</div>
 </div>
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
