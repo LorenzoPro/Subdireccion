@@ -92,7 +92,7 @@
 
 
     <div class="col-md-3" style="color:white; margin-top:5px;">
-      |   Hoy es el 21 de Octubre del 2018
+      | &nbsp; &nbsp; &nbsp; &nbsp;Hoy es el día:
     </div>
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header col-md-4">

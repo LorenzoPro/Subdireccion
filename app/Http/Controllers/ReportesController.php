@@ -3,97 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
-use App\Carreras;
-use App\Datos;
-use Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 
-class CalidadController extends Controller
+class ReportesController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index(){
-      $indicador=\DB::table('indicadores')
-        ->orderBy('id_indicador')
-        ->get();
-
-      $carreras=\DB::table('carreras')
-        ->orderBy('id_carrera')
-        ->get();
-
-      $metas=\DB::table('indicadores')
-        ->select('indicadores.*','metas.*')
-        ->join('metas','metas.id_indicador','=','indicadores.id_indicador')
-        ->get();
-
-      /*$carrerasV11=\DB::select("
-        SELECT carreras.nombre as nombres, datos.hombres,datos.mujeres from datos
-        INNER JOIN indicadores on indicadores.id_indicador= datos.id_indicador
-        INNER JOIN metas on datos.id_indicador = metas.id_indicador
-        INNER JOIN carreras on carreras.id_carrera = datos.id_carrera
-        WHERE datos.id_indicador=".$id." and datos.periodo =".$periodo."
-        and metas.periodo=".$periodo."  and year(datos.created_at)=".$anio."
-      ");
-
-      $carrerasV1="";
-      $valores1="";
-      $valores2="";
-
-      for($i = 0; $i<count($carrerasV11); $i++){
-        $carrerasV1 = $carrerasV1 . '"' .$carrerasV11{$i}->nombres.'",';
-        $valores1 = $valores1 . $carrerasV11{$i}->hombres.',';
-        $valores2 = $valores2 . $carrerasV11{$i}->mujeres.',';
-      }*/
-      $time = Carbon\Carbon::now();
-
-
-      return view('admin.calidad')
-        ->with('indicadores', $indicador)
-        ->with('carreras', $carreras)
-        ->with('tiempo',date_format($time, 'd-M-Y '))
-        ->with('metas', $metas);
-
-
-    }
-    public function ajax(Request $req){
-          $datos=\DB::table('datos')
-          ->where('id_indicador','=',$req->id_indicador)
-          ->get();
-          return json_encode($datos);
-    }
-    public function store(Request $req){
-
-          $validator = Validator:: make($req->all(),[
-            'hombres'=>'required|max:255',
-            'mujeres'=>'required|max:255',
-            'hombres2'=>'required|max:255',
-            'mujeres2'=>'required|max:255',
-            'periodo'=>'required|max:255',
-            'id_carrera'=>'required',
-            'id_indicador'=>'required'
-          ]);
-          if($validator->fails()){
-            return $req;
-
-          }else{
-
-            Datos::create([
-              'hombres'=>$req->hombres,
-              'mujeres'=>$req->mujeres,
-              'hombres2'=>$req->hombres2,
-              'mujeres2'=>$req->mujeres2,
-              'periodo'=>$req->periodo,
-              'id_carrera'=>$req->id_carrera,
-              'id_indicador'=>$req->id_indicador
-            ]);
-            return '1';
-          }
-    }
-    public function Graficas($id,$periodo,$anio){
-      //SUMA DE LA COLUMNA DE HOMBRES
+      /*//SUMA DE LA COLUMNA DE HOMBRES
       $hombres=\DB::select("
       SELECT SUM(hombres) as suma FROM datos
       INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
@@ -141,21 +57,6 @@ class CalidadController extends Controller
       and datos.id_indicador=".$id." and Year(datos.created_at)=".$anio."
       ");
 
-      $arreglo[]=$hombres;
-      /*$valores1="";
-      $valores2="";
-
-      $valores1=$valores1 . '"' .$hombres{0}->suma.'",';
-      $valores2=$valores2 . '"' .$mujeres{0}->suma.'",';
-      $todo=$valores1. "#" .$valores2;*/
-      //$arreglo.push('Hombres',$hombre);
-      //$arreglo.push('Mujeres',$mujeres);
-    //  array_push($arreglo,$hombres);
-      array_push($arreglo,$mujeres,$totalV1,$hombres2,$mujeres2,$totalV2);
-      return json_encode($arreglo);
-
-    }
-    public function carreras($id,$periodo,$anio){
       //TOTAL DE HOMBRES Y MUJERES DE LA VARIABLE 1 CON SU RESPECTIVA CARRERA;
       $carrerasV11=\DB::select("
       SELECT carreras.nombre as nombres, datos.hombres,datos.mujeres, datos.hombres2, datos.mujeres2 from datos
@@ -178,17 +79,9 @@ class CalidadController extends Controller
         $valores2 = $valores2 . $carrerasV11{$i}->mujeres.',';
         $valores3 = $valores3 . $carrerasV11{$i}->hombres2.',';
         $valores4 = $valores4 . $carrerasV11{$i}->mujeres2.',';
-      }
+      }//llave del for
 
-      $todo = $carrerasV1."#".$valores1."#".$valores2."#".$valores3."#".$valores4;
-
-      /*$arreglo[]=$carrerasV1;
-
-      array_push($arreglo,$valores1,$valores2);*/
-
-      return json_encode($todo);
-    }
-    public function porcentaje($id,$periodo,$anio){
+      //TOTAL DE porcentajes CON SUS ANIOS
       $anio2=$anio-1;
       $anio3=$anio2-1;
       $anio4=$anio3-1;
@@ -213,22 +106,19 @@ class CalidadController extends Controller
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
         from datos where id_indicador=".$id." and periodo =".$periodo." and year(datos.created_at)=".$anio5."
       ");
-      $arreglo[]=$porcentaje;
-      array_push($arreglo, $porcentaje2, $porcentaje3, $porcentaje4,$porcentaje5,$anio,$anio2,$anio3,$anio4,$anio5);
 
-      return json_encode($arreglo);
-    }
-    public function nombre($id){
+      //NOMBRE Y VARIABLES DE Indicadores
       $nombre=\DB::select("
       select nombre from indicadores where id_indicador=".$id."
       ");
 
       $variable=\DB::select("
         select variable1, variable2 from indicadores where id_indicador=".$id."
-      ");
+      ");*/
 
-      $arreglo[]=$nombre;
-      array_push($arreglo,$variable);
-      return json_encode($arreglo);
+      $pdf = PDF::loadView('welcome');
+      return $pdf->stream();
+
+
     }
 }

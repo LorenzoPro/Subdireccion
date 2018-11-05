@@ -22,7 +22,8 @@ div.subtitle {
   font-family: 'Montserrat', sans-serif;
   padding-bottom: 10px;
   margin-top: 20px;
-  color: #424949
+  color: #424949;
+  
 }
 body > nav.navbar{
 	border-radius: 0px;

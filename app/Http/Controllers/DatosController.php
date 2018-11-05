@@ -24,6 +24,7 @@ class DatosController extends Controller
             'mujeres'=>'required|max:255',
             'hombres2'=>'required|max:255',
             'mujeres2'=>'required|max:255',
+            'periodo'=>'required|max:255',
             'id_carrera'=>'required',
             'id_indicador'=>'required'
           ]);
@@ -37,6 +38,7 @@ class DatosController extends Controller
               'mujeres'=>$req->mujeres,
               'hombres2'=>$req->hombres2,
               'mujeres2'=>$req->mujeres2,
+              'periodo'=>$req->periodo,
               'id_carrera'=>$req->id_carrera,
               'id_indicador'=>$req->id_indicador
             ]);

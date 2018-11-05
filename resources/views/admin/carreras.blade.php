@@ -33,11 +33,11 @@
 </button>
 <div class="row">
   <div class="table col-md-10 col-sm-10 col-lg-10" style="padding-left:80px; padding-right:80px;">
-    <table class="table table-striped">
+    <table class="table">
       <tbody>
         <tr>
           <th>
-            <table class="table table-striped">
+            <table class="table">
               <thead>
                 <tr>
 

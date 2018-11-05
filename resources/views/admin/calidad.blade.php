@@ -96,7 +96,6 @@
   </div>
 
 
-
 <div class="row">
   <div class="col-md-8 graph2">
     <h4 class="titleGraphs">Comportamiento Anual</h4>
@@ -107,6 +106,17 @@
       <canvas class="loader1" width="400" height="400" style="margin-left: 10%;"></canvas>
   </div>
 </div>
+<br>
+<div class="row">
+  <div class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
+    {!!  Form::open(array( 'url'=>['/administracion/reportes/',0], 'method'=>'GET' ))  !!}
+    <button type="button" name="button" class="btn btn-success reportes" style="width: 100%;" >Imprimir Reporte</button>
+    {!!  Form::close()  !!}
+
+
+  </div>
+</div>
+
 @endsection
 <div class="modal fade usuarios" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog" role="document">
@@ -169,19 +179,22 @@
           @forelse($carreras as $car)
 
           {{ Form::open (array('url'=>'/administracion/calidad','id'=>"Formdatos". $car->id_carrera) )}}
-            <input type="text" name="id_carrera" class="id_carrera" value="{{$car->id_carrera}}">
+            <input type="hidden" name="id_carrera" class="id_carrera" value="{{$car->id_carrera}}">
 
             <div class="from-group">
                 <input type="text" name="id_indicador" class="id_indicador" value="1"><br>
-              <label for="">{{$car->nombre}}</label><br>
-              hombres
-              <input type="text" name="hombres" value=""><br>
-              mujeres
-              <input type="text" name="mujeres" value=""><br>
-              hombres2
-              <input type="text" name="hombres2" value=""><br>
-              mujeres2
-              <input type="text" name="mujeres2" value=""><br>
+                <input type="text" name="periodo" class="periodo" id="periodotext" value="0"><br>
+              <h3 for="">{{$car->nombre}}</h3><br>
+              <h5 for="" style="text-align: center;">Variable 1</h5>
+              Hombres
+              <input type="text" name="hombres" class="form-control" value=""><br>
+              Mujeres
+              <input type="text" name="mujeres" class="form-control" value=""><br>
+              <h5 for="" style="text-align: center;">Variable 2</h5>
+              Hombres
+              <input type="text" name="hombres2" class="form-control" value=""><br>
+              Mujeres
+              <input type="text" name="mujeres2" class="form-control" value=""><br>
             </div>
             <button type="button" class="contestar btn btn-success">Enviar</button>
 
@@ -218,15 +231,10 @@
 
     });
 
-
-
-
-
     $(".indicador").on("click", function(){
-       id = $(this).data('id');
-       periodo=periodo;
-       console.log(anio);
-
+      id = $(this).data('id');
+      periodo=periodo;
+      console.log(anio);
       var id2 = $(this).data('id2');
       $("#id_indicador").val(id);
       $(".id_indicador").val(id2);
@@ -235,36 +243,49 @@
     $(".periodo").on("click", function(){
       var id2 = id;
       periodo = $(this).data('periodo');
+      $(".periodo").val(periodo);
     });
     $('.anio').keyup(function(){
       anio=$(this).val();
       console.log(anio);
-    });
 
+    });
     $(".btnir").on("click",function(){
       //console.log(id,periodo);
       periodo=periodo;
       id=id;
       anio=anio;
-      console.log(anio);
-
       recargar();
       nombre();
       carreras();
+      periodos();
       $('.subtitle').fadeOut(1);
       $('.subtitle').fadeIn(1000);
 
     });
-    function recargar(){
+    $(".reportes").on("click", function(){
+      periodo=periodo;
+      id=id;
+      anio=anio;
+      console.log('jalo');
+      reporte();
+    });
+    function reporte(){
+      $.ajax({
+        url:'administracion/reportes/index/'+id+"/"+periodo+"/"+anio,
+        method:'get',
+      }).done(function(res){
+        console.log(res);
 
+      });
+    }
+    function recargar(){
       $.ajax({
         url:'/administracion/calidad/Graficas/'+id+"/"+periodo+"/"+anio,
         method:'get',
-
       }).done(function(res){
         $('.variable1').empty();
         $('.variable2').empty();
-
         var arr=JSON.parse(res);
         var hombres=arr[0];
         var mujeres=arr[1];
@@ -278,10 +299,9 @@
         var m2=mujeres2[0].suma2;
         var tv1=totalv1[0].totalV1;
         var tv2=totalv2[0].totalV2;
+        //console.log(res);
 
-        console.log(res);
         $('.variable1').append(tv1);
-
           if (h==null) {
             $('.variable1').append(0);
           }
@@ -371,6 +391,8 @@
     var arrayCarreras=[];
     var arrayHombres=[];
     var arrayMujeres=[];
+    var arrayHombres2=[];
+    var arrayMujeres2=[];
     function carreras(){
       $.ajax({
         url:'/administracion/calidad/carreras/'+id+"/"+periodo+"/"+anio,
@@ -380,17 +402,21 @@
         arrayCarreras=[];
         arrayHombres=[];
         arrayMujeres=[];
+        arrayHombres2=[];
+        arrayMujeres2=[];
 
 
 
         res=res.replace(/\\/g,"");
         res=res.replace(/"/gi,"");
-        console.log("RES: "+res);
+        //console.log("RES: "+res);
         var arr=res.split("#");
         var arr2=arr[0].split(",");
         var arr3=arr[1].split(",");
         var arr4=arr[2].split(",");
-        console.log(arr);
+        var arr5=arr[3].split(",");
+        var arr6=arr[4].split(",");
+        //console.log(arr);
         for(var x=0;x<arr2.length-1;x++){
           arrayCarreras.push(arr2[x].trim());
         }
@@ -400,6 +426,12 @@
         for(var x=0;x<arr4.length-1;x++){
           arrayMujeres.push(arr4[x].trim());
         }
+        for(var x=0;x<arr5.length-1;x++){
+          arrayHombres2.push(arr5[x].trim());
+        }
+        for(var x=0;x<arr6.length-1;x++){
+          arrayMujeres2.push(arr6[x].trim());
+        }
         var nombres=arr2[0];
         var nombres2=arr2[1];
         var nombres3=arr2[2];
@@ -407,11 +439,10 @@
         var hombres2=arr2[5];
         var hombres3=arr2[6];
 
-        console.log(arrayCarreras);
+        //console.log(arrayCarreras);
 
-
-        var ctxlbar2 = document.getElementById("myChartbar2");
-        var myChartbar2 = new Chart(ctxlbar2, {
+        var ctxlbar = document.getElementById("myChartbar");
+        var myChartbar = new Chart(ctxlbar, {
             type: 'bar',
             data: {
               labels: arrayCarreras,
@@ -451,9 +482,116 @@
                }
            }
        }
+        });
+
+        var ctxlbar2 = document.getElementById("myChartbar2");
+        var myChartbar2 = new Chart(ctxlbar2, {
+            type: 'bar',
+            data: {
+              labels: arrayCarreras,
+              datasets: [{
+                  label: "Hombres",
+                  borderColor: 'rgb(54, 162, 235)',
+                  data: arrayHombres2,
+                  backgroundColor: [
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(54, 162, 235, 1)'
+                  ],
+              },
+              {
+                label: "Mujeres",
+                borderColor: 'rgb(255, 99, 132)',
+                data: arrayMujeres2,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+              }
+
+            ]
+          },
+          options: {
+           elements: {
+               line: {
+                   tension: 0, // disables bezier curves
+               }
+           }
+       }
       });
       });
+    }//llave de funcion carreras
+    function periodos(){
+      $.ajax({
+        url:'/administracion/calidad/porcentaje/'+id+"/"+periodo+"/"+anio,
+        method:'get',
+      }).done(function(res){
+        var arr =JSON.parse(res);
+        var porciento= arr[0];
+        var p = porciento[0].Porcentaje;
+        var porciento2= arr[1];
+        var p2 = porciento2[0].Porcentaje;
+        var porciento3= arr[2];
+        var p3 = porciento3[0].Porcentaje;
+        var porciento4= arr[3];
+        var p4 = porciento4[0].Porcentaje;
+        var porciento5= arr[4];
+        var p5 = porciento5[0].Porcentaje;
+        var anio1=arr[5];
+        var anio2=arr[6];
+        var anio3=arr[7];
+        var anio4=arr[8];
+        var anio5=arr[9];
+
+        if (p2==null) {
+          p2=0;
+          p3=0;
+          p4=0;
+          p5=0;
+        }
+
+          console.log(anio1);
+          var ctxline = document.getElementById("myChartline");
+          var myChartline = new Chart(ctxline, {
+              type: 'line',
+              data: {
+                labels: [anio5,anio4,anio3,anio2,anio1],
+                datasets: [{
+                    label: "Porcentaje  ",
+                    borderColor: 'rgb(255, 99, 244)',
+                    data: [p5,p4,p3,p2,p],
+                }]
+            },
+            options: {
+             elements: {
+                 line: {
+                     tension: 0, // disables bezier curves
+                 }
+             }
+         }
+          });
+          console.log(p);
+          /////////////////////////////////grafica de porcentaje
+          $('.loader1').ClassyLoader({
+              percentage: p,
+              speed: 20,
+              fontFamily: 'Georgia',
+              fontColor: 'rgba(0,0,0,0.4)',
+              lineColor: 'rgba(0,255,0,0.8)',
+              lineWidth: 3,
+              remainingLineColor: 'rgba(0,0,0,0.1)'
+          });
+      });
+
     }
+
 
     //////////////////////////////////////////FUNCION PARA EL NOMBRE QUE PROBABLEMENTE SE QUITE///////////////
     function nombre(){
@@ -502,68 +640,9 @@
   });
 
 
-  var ctxline = document.getElementById("myChartline");
-  var myChartline = new Chart(ctxline, {
-      type: 'line',
-      data: {
-        labels: ["2012", "2013", "2014", "2015", "2016", "2017"],
-        datasets: [{
-            label: "My First dataset",
-            borderColor: 'rgb(255, 99, 244)',
-            data: [0, 10, 5,20,3, 45],
-        }]
-    },
-    options: {
-     elements: {
-         line: {
-             tension: 0, // disables bezier curves
-         }
-     }
- }
-  });
 
-  var ctxlbar = document.getElementById("myChartbar");
-  var myChartbar = new Chart(ctxlbar, {
-      type: 'bar',
-      data: {
-        labels: ["CP", "IGEM", "ISC", "II", "Electromecanica", "Electronica"],
-        datasets: [{
-            label: "Hombres",
-            borderColor: 'rgb(255, 99, 132)',
-            data: [5, 10, 5,20,3, 45],
-            backgroundColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(54, 162, 235, 1)'
-            ],
-        },
-        {
-          label: "Mujeres",
-          borderColor: 'rgb(255, 99, 132)',
-          data: [3,8, 7,15,7, 20],
-          backgroundColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 99, 132, 1)'
-          ],
-        }
 
-      ]
-    },
-    options: {
-     elements: {
-         line: {
-             tension: 0, // disables bezier curves
-         }
-     }
- }
-  });
+
 var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
     type: 'doughnut',
@@ -726,14 +805,17 @@ var myChart4 = new Chart(ctx4, {
     console.log('sijaal');
   });
 
-$('.loader1').ClassyLoader({
-    percentage: 100,
-    speed: 20,
-    fontFamily: 'Georgia',
-    fontColor: 'rgba(0,0,0,0.4)',
-    lineColor: 'rgba(0,255,0,0.8)',
-    lineWidth: 3,
-    remainingLineColor: 'rgba(0,0,0,0.1)'
-});
+  /////////////////////////////////grafica de porcentaje
+  $('.loader1').ClassyLoader({
+      percentage: 1,
+      speed: 20,
+      fontFamily: 'Georgia',
+      fontColor: 'rgba(0,0,0,0.4)',
+      lineColor: 'rgba(0,255,0,0.8)',
+      lineWidth: 3,
+      remainingLineColor: 'rgba(0,0,0,0.1)'
+  });
+
+
 </script>
 @endsection
