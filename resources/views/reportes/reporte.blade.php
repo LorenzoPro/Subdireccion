@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Reportes</title>
+    <title></title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('img/icons/favicon.png') }}" />
 
@@ -10,147 +10,441 @@
     <link rel="stylesheet" href="{{ asset('css/reportes.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome-all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
+
     <!-- Bootstrap -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+
+
+    <style>
+
+        div.itsncg{
+          float: left;
+          font-weight: bold;
+          border-bottom: 2px solid #512f80;
+        }
+        div.logo{
+          float: right;
+        }
+
+        div.contenedor{
+          width: 100%;
+          border: 1px solid #000;
+          font-weight: bold;
+        }
+        div.con{
+          width: 100%;
+          border: 1px solid #000;
+          font-size: 11px;
+
+        }
+        div.contenedor2{
+          width: 80%;
+          float: left;
+        }
+        div.contenedor3{
+          width: 20%;
+          float: inline-end;
+          padding-left: 3%;
+
+        }
+        div.titutlo{
+          text-align: center;
+          font-size: 20px;
+          margin: 2px;
+        }
+        div.subtitulo{
+          float: left;
+        }
+        div.res{
+          text-align: center;
+          border-bottom: 1px solid black;
+
+        }
+        div.fecha{
+          float: right;
+          border-bottom: 1px solid black;
+
+        }
+
+        div.valores{
+          border: 1px solid #000;
+        }
+        div.variable1{
+          width: 10%;
+          text-align: right;
+          float: left;
+          position: absolute;
+          font-size: 10px;
+          padding: 5px;
+        }
+        div.tendencia{
+          margin-left: 25%;
+        }
+        div.contenido{
+          width: 65%;
+          margin-left: 15%;
+          border-bottom: 1px solid black;
+          text-align: center;
+          font-size: 10px;
+          padding: 5px;
+        }
+        div.valor{
+          width: 20%;
+          border-bottom: 1px solid black;
+          text-align: center;
+          font-size: 10px;
+          padding: 5px;
+        }
+        div.valor2{
+          width: 20%;
+          border-bottom: 1px solid black;
+          text-align: center;
+          font-size: 10px;
+          padding: 5px;
+          float: left;
+        }
+        div.valortotal{
+          position: absolute;
+          padding-left: 50px;
+        }
+        h6.dd{
+          float: left;
+        }
+        h6.v{
+          padding-left: 87%;
+        }
+        div.firmas{
+          width: 30%;
+          text-align: center;
+          border-top: 1px solid black;
+          float: left;
+          margin-top: 30px;
+          font-size: 11px
+        }
+        div.er{
+          width: 100%;
+          text-align: center;
+          font-size: 11px
+        }
+        div.firmas2{
+          width: 30%;
+          text-align: center;
+          border-top: 1px solid black;
+          float: right;
+          margin-top: 30px;
+          font-size: 11px
+        }
+        div.er2{
+          width: 100%;
+          text-align: center;
+          font-size: 11px;
+        }
+
+
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #customers td{
+          font-size: 10px;
+        }
+        #customers2 td{
+          font-size: 10px;
+        }
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            text-align: center;
+
+        }
+        #customers2 {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 20%;
+            margin: 20px;
+            float: left;
+        }
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers tr:hover {background-color: #ddd;}
+
+        #customers th {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            color: black;
+        }
+       td#total{
+          padding-top: 20px;
+        }
+        #customers2 td, #customers2 th {
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        #customers2 tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers2 tr:hover {background-color: #ddd;}
+
+        #customers2 th {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+
+            color: black;
+        }
+
+        div.grafica{
+          width: 30%;
+          height: 250px;
+          float: left;
+        }
+    </style>
   </head>
   <body>
 
     <div class="" id="todo">
 
     <div id="todo">
+      <div class="itsncg">
+        INSTITUTO TECNOLÓGICO SUPERIOR DE NUEVO CASAS GRANDES
+      </div >
+      <div class="logo">
+        <img src="{{ asset('img/logotec.png') }}" alt="" style="height: 65px;">
+      </div>
+      <br>
+      <div class="titutlo">
+          Indicadores de calidad
+      </div>
+      <div class="fecha">
+          Fecha:{{ date('d-M-Y') }}
+      </div><br>
 
-      <div class="row">
-        <div class="col-md-8 col-xs-10">
-          <h3>Instituto Tecnológico de Nuevo Casas Grandes</h3>
-        </div>
-        <div class="col-md-2 col-xs-2 ">
-
-              <img src="{{ asset('img/logotec.png') }}" alt="" style="height: 65px;">
-
-        </div>
-        <br>
+      <div class="subtitulo">
+          Área responsable del Indicador:
       </div>
-      <div class="row">
-        <div class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4">
-          <h4>Indicadores de calidad</h4>
-        </div>
+      <div class="res">
+        {{str_replace('"', ' ', $area)}}
       </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4 col-md-offset-8 col-xs-offset-8">
-          <h5 class="fecha color-gray" style="border-bottom: 1px solid black";>Fecha de Elaboración:{{ date('d-M-Y') }}</h5>
-        </div>
+      <div class="subtitulo">
+          Nombre del Indicador:
       </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4">
-          <h5>Área responsable del Indicador:</h5>
-        </div>
-        <div class="col-md-8 col-xs-8">
-          <h5 style="border-bottom: 1px solid black";>Subdireccion Academica</h5>
-        </div>
-
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4">
-          <h5>Nombre del Indicador:</h5>
-        </div>
-        <div class="col-md-8 col-xs-8">
-
-          <h5 style="border-bottom: 1px solid black";>asdasdasdas</h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-xs-4">
-          <h5>Objetivo:</h5>
-        </div>
-        <div class="col-md-8 col-xs-8">
-          <h5 style="border-bottom: 1px solid black";>Evaluar del desempeño  institucional en acciones de atecion compensator que contribuyan a la permanencia de los alumnos</h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 col-xs-3">
-          <h4>Valor de la meta:</h4>
-        </div>
-        <div class="col-md-4 col-xs-4">
-          <h5 style="">Tendencia:</h5>
-        </div>
+      <div class="res">
+        {{str_replace('"', ' ', $nombres)}}
       </div>
 
-      <hr>
+      <div class="subtitulo">
+        Objetivo:
+      </div>
+      <div class="res">
+        {{str_replace('"', ' ', $objetivo)}}
+      </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <canvas id="myChart1" width="200" height="550"></canvas>
+      <div class="meta subtitulo">
+          Valor de la meta:{{str_replace('"', ' ', $meta)}}%
+      </div>
+      <div class="tendencia" style="padding-left:15%;">
+          Tendencia:{{str_replace('"', ' ', $tendencia)}}
+      </div>
+
+      <div class="periodo contenedor">
+        PERIODO CORRESPONDIENTE:
+      </div>
+      <div class="con">
+        <table id="customers" style="border: 1px solid #000;">
+          <thead>
+            <tr>
+              <th>Desglose Variable 1</th>
+              <th>H</th>
+              <th>M</th>
+              <th>Desglose Variable 2</th>
+              <th>H</th>
+              <th>M</th>
+              <th>Total desgose</th>
+            </tr>
+          </thead>
+          <tbody>
+              @forelse($carreras as $car)
+            <tr>
+              <td >{{ $car->nombres }}</td>
+              <td>{{ $car->hombres }}</td>
+              <td>{{ $car->mujeres }}</td>
+              <td >{{ $car->nombres }}</td>
+              <td>{{ $car->hombres2 }}</td>
+              <td>{{ $car->mujeres2 }}</td>
+            </tr>
+
+            @empty
+              <p>Sin Registros</p>
+            @endforelse
+            <tr>
+              <td id="total">Total</td>
+              <td id="total">{{str_replace('"', ' ', $hombres)}}</td>
+              <td id="total">{{str_replace('"', ' ', $mujeres)}}</td>
+              <td id="total">Total</td>
+              <td id="total">{{str_replace('"', ' ', $hombres2)}}</td>
+              <td id="total">{{str_replace('"', ' ', $mujeres2)}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="">
+        <div class="valores contenedor">
+          DESCRIPCIÓN Y DATOS:
+        </div>
+        <div class="col-sm-9" style="border: 1px solid #000; font-size: 8px;">
+          <div class="col-sm-2" style="">
+            Variable 1=
+          </div>
+          <div class="col-sm-10" style="border-bottom: 1px solid #000;">
+            esta es una ptueba as kskf ksd ks kd lkdjlkj lskdjk jl dkfjlskdjs uiewdjhks
+          </div>
+          <div class="col-sm-2">
+            Variable 2=
+          </div>
+          <div class="col-sm-10">
+            esta es una ptueba as kskf ksd ks kd lkdjlkj lskdjk jl dkfjlskdjs uiewdjhks
+          </div>
+        </div>
+        <div class="col-sm-3" style="border: 1px solid #000; font-size:8px;">
+          <div class="col-sm-5">
+            <div style="border-bottom: 1px solid #000;">
+              909
+            </div>
+            <div>
+              788
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div>
+              =100%
+            </div>
+          </div>
+
+
         </div>
       </div>
+      <br>
+      <br>
+      <div class="contenedor">
+        COMPORTAMIENTO HISTORICO DEL INDICADOR
+      </div>
+      <div style="border: 1px solid #000; height: 240px;">
+        <table id="customers2">
+          <thead>
+            <tr>
+              <th>Historial</th>
+              <th>ENE-JUL %</th>
+              <th>AGO-DIC %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2018</td>
+              <td>2018</td>
+              <td>2018</td>
+            </tr>
+            <tr>
+              <td>2018</td>
+              <td>2018</td>
+              <td>2018</td>
+            </tr>
+            <tr>
+              <td>2018</td>
+              <td>2018</td>
+              <td>2018</td>
+            </tr>
+            <tr>
+              <td>2018</td>
+              <td>2018</td>
+              <td>2018</td>
+            </tr>
+            <tr>
+              <td>2018</td>
+              <td>2018</td>
+              <td>2018</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="grafica">
+            <canvas id="myChartline"></canvas>
+        </div>
+      </div>
+      <br>
+
+      <div class="contenedor">
+        ESTRATEGIAS PARA EL CUMPLIMIENTO DE METAS
+      </div>
+      <div class="estra" style="border: 1px solid #000; height:75px;">
+
+      </div>
+      <br>
+      <div class="firmas">
+        Responsable del Indicador
+        <div class="er1">
+          Entrada
+        </div>
+      </div>
+      <div class="firmas2">
+        Evaluación Institucional y Estadística
+        <div class="er2">
+          Recibe
+        </div>
+      </div>
+
+
+
+
+
 
     </div>
-  </body>
+  </div>
+
+</div>
+
+
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="{{  asset('js/jquery-3.3.1.min.js')  }}"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+
   <script src="{{ asset('js/Chart.bundle.min.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
   <script type="text/javascript">
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> master
-    function imprimir(elemento){
-      var respaldo = $('body').html();
-      var div = $('#'+elemento).clone();
-      $('body').empty().html(div);
-      window.print();
-      $('body').html(respaldo);
-    }
-    $(document).ready(function(){
-
-
-      var ctx1 = document.getElementById("myChart1").getContext('2d');
-      ctx1.canvas.width = 500;
-      var myChart1 = new Chart(ctx1, {
-          type: 'line',
-          data: {
-              labels: [  asdasd  ],
-              datasets: [{
-                  label: 'Pre-Evaluacion',
-                  borderColor : "rgba(151,187,205,1)",
-                  data: [ 10  ],
-            },
-            {
-              label :'Post-Evaluacion',
-              borderColor : "rgba(151,100,205,1)",
-              data : [  20  ]
-            }
-
-          ]
-          },
-          options : {
-            elements : {
-              rectangle : {
-                borderWidth : 1,
-                borderColor : "rgb(0,255,0)",
-                borderSkipped : 'bottom'
-              }
-            },
-            responsive : true,
-            maintainAspectRatio: false,
-            title : {
-              display : true
-            }
-          }
-      });
-      imprimir('todo');
+  $(document).ready( function(){
+    var ctxline = document.getElementById("myChartline");
+    var myChartline = new Chart(ctxline, {
+        type: 'line',
+        data: {
+          labels: [2019,2019,2019,2019,2019],
+          datasets: [{
+              label: "Porcentaje  ",
+              borderColor: 'rgb(255, 99, 244)',
+              data: [1,4,6,2,4],
+          }]
+      },
+      options: {
+       elements: {
+           line: {
+               tension: 0, // disables bezier curves
+           }
+       }
+   }
     });
+  });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
   </script>
+
+    </body>
+
 
 </html>

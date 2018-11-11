@@ -38,13 +38,16 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/reportes','ReportesController@index');
   Route::resource('reportes','ReportesController');
 
+  Route::get('/reportes','ImprimirController@index');
+  Route::resource('reporte','ImprimirController');
+
   Route::post('/calidad/ajax','CalidadController@ajax');
   //Route::get('/calidad/Graficas','CalidadController@Graficas');
   Route::get('/calidad/Graficas/{id}/{periodo}/{anio}','CalidadController@Graficas');
   Route::get('/calidad/carreras/{id}/{periodo}/{anio}','CalidadController@carreras');
   Route::get('/calidad/porcentaje/{id}/{periodo}/{anio}','CalidadController@porcentaje');
   Route::get('/calidad/index/{id}/{periodo}/{anio}','ReportesController@index');
-  Route::get('/reportes/{id}/{periodo}/{anio}','ReportesController@index');
+  Route::get('/reportes/index/{id}/{periodo}/{anio}','ReportesController@index');
   Route::get('/calidad/nombre/{id}','CalidadController@nombre');
 
 

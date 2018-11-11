@@ -109,9 +109,10 @@
 <br>
 <div class="row">
   <div class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
-    {!!  Form::open(array( 'url'=>['/administracion/reportes/',0], 'method'=>'GET' ))  !!}
-    <button type="button" name="button" class="btn btn-success reportes" style="width: 100%;" >Imprimir Reporte</button>
-    {!!  Form::close()  !!}
+
+    <button type="submit" name="button" class="btn btn-success reportes" style="width: 100%;" >Imprimir Reporte</button>
+
+
 
 
   </div>
@@ -216,6 +217,7 @@
 
 @section('scripts')
 
+
   <script src="{{ asset('js/Chart.bundle.min.js') }}" type="text/javascript"></script>
   <script>
 
@@ -223,6 +225,9 @@
     var id=1;
     var periodo=0;
     var anio = 2018;
+    $('.reportes').fadeOut(1);
+    $('.subtitle').append("Selecciona el Indicador");
+
     console.log(id);
     $.ajax({
       url:'/administracion/calidad/index/'+id+"/"+periodo+"/"+anio,
@@ -261,6 +266,7 @@
       periodos();
       $('.subtitle').fadeOut(1);
       $('.subtitle').fadeIn(1000);
+      $('.reportes').fadeIn(1000);
 
     });
     $(".reportes").on("click", function(){
@@ -271,13 +277,17 @@
       reporte();
     });
     function reporte(){
-      $.ajax({
+      $('body').load('administracion/reportes/index/'+id+"/"+periodo+"/"+anio, function(e){
+        console.log(e);
+        window.print();
+        location.reload();
+      });
+  /*  $.ajax({
         url:'administracion/reportes/index/'+id+"/"+periodo+"/"+anio,
         method:'get',
       }).done(function(res){
         console.log(res);
-
-      });
+      });*/
     }
     function recargar(){
       $.ajax({

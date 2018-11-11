@@ -8,8 +8,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 class ReportesController extends Controller
 {
     //
-    public function index(){
-      /*//SUMA DE LA COLUMNA DE HOMBRES
+    public function index($id,$periodo,$anio){
+      //SUMA DE LA COLUMNA DE HOMBRES
       $hombres=\DB::select("
       SELECT SUM(hombres) as suma FROM datos
       INNER JOIN indicadores on indicadores.id_indicador = datos.id_indicador
@@ -108,16 +108,84 @@ class ReportesController extends Controller
       ");
 
       //NOMBRE Y VARIABLES DE Indicadores
-      $nombre=\DB::select("
+      $nombreIndicador=\DB::select("
       select nombre from indicadores where id_indicador=".$id."
+      ");
+
+      $nombreArea=\DB::select("
+      select area from indicadores where id_indicador=".$id."
+      ");
+
+      $nombreObjetivo=\DB::select("
+      select objetivo from indicadores where id_indicador=".$id."
       ");
 
       $variable=\DB::select("
         select variable1, variable2 from indicadores where id_indicador=".$id."
-      ");*/
+      ");
 
-      $pdf = PDF::loadView('welcome');
-      return $pdf->stream();
+      $meta =\DB::select("
+      SELECT meta  FROM metas
+      INNER JOIN datos on datos.id_indicador = metas.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo."
+      and datos.id_indicador=".$id." and Year(datos.created_at)=".$anio."
+      ");
+
+      $tendencia =\DB::select("
+      SELECT tendencia  FROM metas
+      INNER JOIN datos on datos.id_indicador = metas.id_indicador
+      and metas.periodo=".$periodo." and datos.periodo=".$periodo."
+      and datos.id_indicador=".$id." and Year(datos.created_at)=".$anio."
+      ");
+
+      $nombres1="";
+      $nombres1=$nombres1 . '' .$nombreIndicador{0}->nombre.'';
+
+      $nombreArea1="";
+      $nombreArea1=$nombreArea1 . '' .$nombreArea{0}->area.'';
+
+      $nombreObjetivo1="";
+      $nombreObjetivo1=$nombreObjetivo1 . '' .$nombreObjetivo{0}->objetivo.'';
+
+      $meta1="";
+      $meta1=$meta1 . '' . $meta{0}->meta.'';
+
+      $tendencia1="";
+      $tendencia1=$tendencia1 . '' . $tendencia{0}->tendencia.'';
+
+      $TotaldeHombres="";
+      $TotaldeHombres=$TotaldeHombres . '' .$hombres{0}->suma.'';
+
+      $TotaldeHombres2="";
+      $TotaldeHombres2=$TotaldeHombres2 . '' .$hombres2{0}->suma2.'';
+
+      $TotaldeMujeres="";
+      $TotaldeMujeres=$TotaldeMujeres . '' .$mujeres{0}->suma.'';
+
+      $TotaldeMujeres2="";
+      $TotaldeMujeres2=$TotaldeMujeres2 . '' .$mujeres2{0}->suma2.'';
+
+
+
+      //return($nombres1);
+      //dd($nombres1);
+     return view('reportes.reporte')
+        ->with('nombres',json_encode($nombres1))
+        ->with('area',json_encode($nombreArea1))
+        ->with('objetivo',json_encode($nombreObjetivo1))
+        ->with('meta',json_encode($meta1))
+        ->with('carreras', $carrerasV11)
+        ->with('tendencia',json_encode($tendencia1))
+        ->with('hombres',json_encode($TotaldeHombres))
+        ->with('hombres2',json_encode($TotaldeHombres2))
+        ->with('mujeres',json_encode($TotaldeMujeres))
+        ->with('mujeres2',json_encode($TotaldeMujeres2));
+
+
+
+
+  /*$pdf = PDF::loadView('reportes.reporte');
+      return $pdf->stream();*/
 
 
     }
