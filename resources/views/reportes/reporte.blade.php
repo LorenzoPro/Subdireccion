@@ -166,7 +166,7 @@
             border-collapse: collapse;
             width: 20%;
             margin: 20px;
-            float: left;
+
         }
         #customers tr:nth-child(even){background-color: #f2f2f2;}
 
@@ -199,8 +199,8 @@
         }
 
         div.grafica{
-          width: 30%;
-          height: 250px;
+          width: 40%;
+          height: 350px;
           float: left;
         }
     </style>
@@ -301,28 +301,28 @@
           <div class="col-sm-2" style="">
             Variable 1=
           </div>
-          <div class="col-sm-10" style="border-bottom: 1px solid #000;">
-            esta es una ptueba as kskf ksd ks kd lkdjlkj lskdjk jl dkfjlskdjs uiewdjhks
+          <div class="col-sm-10" style="border-bottom: 1px solid #000; text-align:center;">
+            {{str_replace('"', ' ', $variable1)}}
           </div>
           <div class="col-sm-2">
             Variable 2=
           </div>
-          <div class="col-sm-10">
-            esta es una ptueba as kskf ksd ks kd lkdjlkj lskdjk jl dkfjlskdjs uiewdjhks
+          <div class="col-sm-10" style="text-align:center;">
+            {{str_replace('"', ' ', $variable2)}}
           </div>
         </div>
         <div class="col-sm-3" style="border: 1px solid #000; font-size:8px;">
           <div class="col-sm-5">
             <div style="border-bottom: 1px solid #000;">
-              909
+              {{str_replace('"', ' ', $TotalVariable1)}}
             </div>
             <div>
-              788
+              {{str_replace('"', ' ', $TotalVariable2)}}
             </div>
           </div>
           <div class="col-sm-7">
             <div>
-              =100%
+              ={{str_replace('"', ' ', $porcentajeFinal1)}}%
             </div>
           </div>
 
@@ -332,57 +332,72 @@
       <br>
       <br>
       <div class="contenedor">
-        COMPORTAMIENTO HISTORICO DEL INDICADOR
+        COMPORTAMIENTO HISTORICO DEL INDICADOR:
       </div>
-      <div style="border: 1px solid #000; height: 240px;">
-        <table id="customers2">
-          <thead>
-            <tr>
-              <th>Historial</th>
-              <th>ENE-JUL %</th>
-              <th>AGO-DIC %</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2018</td>
-              <td>2018</td>
-              <td>2018</td>
-            </tr>
-            <tr>
-              <td>2018</td>
-              <td>2018</td>
-              <td>2018</td>
-            </tr>
-            <tr>
-              <td>2018</td>
-              <td>2018</td>
-              <td>2018</td>
-            </tr>
-            <tr>
-              <td>2018</td>
-              <td>2018</td>
-              <td>2018</td>
-            </tr>
-            <tr>
-              <td>2018</td>
-              <td>2018</td>
-              <td>2018</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="grafica">
-            <canvas id="myChartline"></canvas>
+      <div class="col-sm-12" style="border: 1px solid #000; height: 180px;">
+        <div class="col-sm-4">
+          <table id="customers2">
+            <thead>
+              <tr>
+                <th>Historial</th>
+                <th>ENE-JUL %</th>
+                <th>AGO-DIC %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{str_replace('"', ' ', $anio5)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal5)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic5)}}</td>
+              </tr>
+              <tr>
+                <td>{{str_replace('"', ' ', $anio4)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal4)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic4)}}</td>
+              </tr>
+              <tr>
+                <td>{{str_replace('"', ' ', $anio3)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal3)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic3)}}</td>
+              </tr>
+              <tr>
+                <td>{{str_replace('"', ' ', $anio2)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal2)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic2)}}</td>
+              </tr>
+              <tr>
+                <td>{{str_replace('"', ' ', $anio)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal1)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic1)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-sm-4" style="height:200px;">
+            <canvas id="myChartline" width="400" height="150"></canvas>
         </div>
       </div>
       <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
 
-      <div class="contenedor">
-        ESTRATEGIAS PARA EL CUMPLIMIENTO DE METAS
+      <div class="col-sm-12 contenedor">
+        ESTRATEGIAS PARA EL CUMPLIMIENTO DE METAS:
       </div>
-      <div class="estra" style="border: 1px solid #000; height:75px;">
+      <div class="col-ms-12" style="border: 1px solid #000; height:100px;">
 
       </div>
+
+
+
       <br>
       <div class="firmas">
         Responsable del Indicador
@@ -421,15 +436,16 @@
   <script type="text/javascript">
 
   $(document).ready( function(){
+
     var ctxline = document.getElementById("myChartline");
     var myChartline = new Chart(ctxline, {
         type: 'line',
         data: {
-          labels: [2019,2019,2019,2019,2019],
+          labels: [{!!$anio5!!},{!!$anio4!!},{!!$anio3!!},{!!$anio2!!},{!!$anio!!}],
           datasets: [{
               label: "Porcentaje  ",
               borderColor: 'rgb(255, 99, 244)',
-              data: [1,4,6,2,4],
+              data: [{!!$porcentajeFinal5!!},{!!$porcentajeFinal4!!},{!!$porcentajeFinal3!!},{!!$porcentajeFinal2!!},{!!$porcentajeFinal1!!}],
           }]
       },
       options: {

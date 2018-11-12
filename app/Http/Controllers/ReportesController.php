@@ -88,23 +88,44 @@ class ReportesController extends Controller
       $anio5=$anio4-1;
       $porcentaje=\DB::select("
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
-        from datos where id_indicador=".$id." and periodo =".$periodo." and year(datos.created_at)=".$anio."
+        from datos where id_indicador=".$id." and periodo =0 and year(datos.created_at)=".$anio."
       ");
       $porcentaje2=\DB::select("
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
-        from datos where id_indicador=".$id." and periodo =".$periodo." and year(datos.created_at)=".$anio2."
+        from datos where id_indicador=".$id." and periodo =0 and year(datos.created_at)=".$anio2."
       ");
       $porcentaje3=\DB::select("
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
-        from datos where id_indicador=".$id." and periodo =".$periodo." and year(datos.created_at)=".$anio3."
+        from datos where id_indicador=".$id." and periodo =0 and year(datos.created_at)=".$anio3."
       ");
       $porcentaje4=\DB::select("
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
-        from datos where id_indicador=".$id." and periodo =".$periodo." and year(datos.created_at)=".$anio4."
+        from datos where id_indicador=".$id." and periodo =0 and year(datos.created_at)=".$anio4."
       ");
       $porcentaje5=\DB::select("
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
-        from datos where id_indicador=".$id." and periodo =".$periodo." and year(datos.created_at)=".$anio5."
+        from datos where id_indicador=".$id." and periodo =0 and year(datos.created_at)=".$anio5."
+      ");
+
+      $porcentaje11=\DB::select("
+        SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
+        from datos where id_indicador=".$id." and periodo =1 and year(datos.created_at)=".$anio."
+      ");
+      $porcentaje22=\DB::select("
+        SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
+        from datos where id_indicador=".$id." and periodo =1 and year(datos.created_at)=".$anio2."
+      ");
+      $porcentaje33=\DB::select("
+        SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
+        from datos where id_indicador=".$id." and periodo =1 and year(datos.created_at)=".$anio3."
+      ");
+      $porcentaje44=\DB::select("
+        SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
+        from datos where id_indicador=".$id." and periodo =1 and year(datos.created_at)=".$anio4."
+      ");
+      $porcentaje55=\DB::select("
+        SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
+        from datos where id_indicador=".$id." and periodo =1 and year(datos.created_at)=".$anio5."
       ");
 
       //NOMBRE Y VARIABLES DE Indicadores
@@ -141,6 +162,13 @@ class ReportesController extends Controller
       $nombres1="";
       $nombres1=$nombres1 . '' .$nombreIndicador{0}->nombre.'';
 
+      $variable1="";
+      $variable1=$variable1 . '' . $variable{0}->variable1.'';
+
+      $variable2="";
+      $variable2=$variable1 . '' . $variable{0}->variable2.'';
+
+
       $nombreArea1="";
       $nombreArea1=$nombreArea1 . '' .$nombreArea{0}->area.'';
 
@@ -165,6 +193,57 @@ class ReportesController extends Controller
       $TotaldeMujeres2="";
       $TotaldeMujeres2=$TotaldeMujeres2 . '' .$mujeres2{0}->suma2.'';
 
+      $TotalVariable1="";
+      $TotalVariable1=$TotalVariable1 . '' .$totalV1{0}->totalV1.'';
+
+      $TotalVariable2="";
+      $TotalVariable2=$TotalVariable2 . '' .$totalV2{0}->totalV2.'';
+
+      $porcentajeFinal1="";
+      $porcentajeFinal1=$porcentajeFinal1 . '' . $porcentaje{0}->Porcentaje.'';
+
+      $porcentajeFinal2="";
+      $porcentajeFinal2=$porcentajeFinal2 . '' . $porcentaje2{0}->Porcentaje.'';
+
+      $porcentajeFinal3="";
+      $porcentajeFinal3=$porcentajeFinal3 . '' . $porcentaje3{0}->Porcentaje.'';
+
+      $porcentajeFinal4="";
+      $porcentajeFinal4=$porcentajeFinal4 . '' . $porcentaje4{0}->Porcentaje.'';
+
+      $porcentajeFinal5="";
+      $porcentajeFinal5=$porcentajeFinal5 . '' . $porcentaje5{0}->Porcentaje.'';
+
+      $porcentajeFinaldic1="";
+      $porcentajeFinaldic1=$porcentajeFinaldic1 . '' . $porcentaje11{0}->Porcentaje.'';
+
+      $porcentajeFinaldic2="";
+      $porcentajeFinaldic2=$porcentajeFinaldic2 . '' . $porcentaje22{0}->Porcentaje.'';
+
+      $porcentajeFinaldic3="";
+      $porcentajeFinaldic3=$porcentajeFinaldic3 . '' . $porcentaje33{0}->Porcentaje.'';
+
+      $porcentajeFinaldic4="";
+      $porcentajeFinaldic4=$porcentajeFinaldic4 . '' . $porcentaje44{0}->Porcentaje.'';
+
+      $porcentajeFinaldic5="";
+      $porcentajeFinaldic5=$porcentajeFinaldic5 . '' . $porcentaje55{0}->Porcentaje.'';
+
+      if ($porcentajeFinal2==null) {
+        $porcentajeFinal2=0;
+        $porcentajeFinal3=0;
+        $porcentajeFinal4=0;
+        $porcentajeFinal5=0;
+      }
+      if ($porcentajeFinaldic2==null) {
+        $porcentajeFinaldic2=0;
+        $porcentajeFinaldic3=0;
+        $porcentajeFinaldic4=0;
+        $porcentajeFinaldic5=0;
+      }
+
+
+
 
 
       //return($nombres1);
@@ -172,8 +251,27 @@ class ReportesController extends Controller
      return view('reportes.reporte')
         ->with('nombres',json_encode($nombres1))
         ->with('area',json_encode($nombreArea1))
+        ->with('variable1',json_encode($variable1))
+        ->with('variable2',json_encode($variable2))
+        ->with('TotalVariable1',json_encode($TotalVariable1))
+        ->with('TotalVariable2',json_encode($TotalVariable2))
+        ->with('porcentajeFinal1',json_encode($porcentajeFinal1))
+        ->with('porcentajeFinal2',json_encode($porcentajeFinal2))
+        ->with('porcentajeFinal3',json_encode($porcentajeFinal3))
+        ->with('porcentajeFinal4',json_encode($porcentajeFinal4))
+        ->with('porcentajeFinal5',json_encode($porcentajeFinal5))
+        ->with('porcentajeFinaldic1',json_encode($porcentajeFinaldic1))
+        ->with('porcentajeFinaldic2',json_encode($porcentajeFinaldic2))
+        ->with('porcentajeFinaldic3',json_encode($porcentajeFinaldic3))
+        ->with('porcentajeFinaldic4',json_encode($porcentajeFinaldic4))
+        ->with('porcentajeFinaldic5',json_encode($porcentajeFinaldic5))
         ->with('objetivo',json_encode($nombreObjetivo1))
         ->with('meta',json_encode($meta1))
+        ->with('anio',json_encode($anio))
+        ->with('anio2',json_encode($anio2))
+        ->with('anio3',json_encode($anio3))
+        ->with('anio4',json_encode($anio4))
+        ->with('anio5',json_encode($anio5))
         ->with('carreras', $carrerasV11)
         ->with('tendencia',json_encode($tendencia1))
         ->with('hombres',json_encode($TotaldeHombres))

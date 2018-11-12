@@ -279,8 +279,8 @@
     function reporte(){
       $('body').load('administracion/reportes/index/'+id+"/"+periodo+"/"+anio, function(e){
         console.log(e);
-        window.print();
-        location.reload();
+        //window.print();
+        //location.reload();
       });
   /*  $.ajax({
         url:'administracion/reportes/index/'+id+"/"+periodo+"/"+anio,
@@ -449,7 +449,7 @@
         var hombres2=arr2[5];
         var hombres3=arr2[6];
 
-        //console.log(arrayCarreras);
+      //  console.log(nombres2);
 
         var ctxlbar = document.getElementById("myChartbar");
         var myChartbar = new Chart(ctxlbar, {
@@ -565,6 +565,9 @@
           p3=0;
           p4=0;
           p5=0;
+        }
+        if (p==null) {
+          $('.reportes').fadeOut(1);
         }
 
           console.log(anio1);
