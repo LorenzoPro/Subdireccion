@@ -231,4 +231,39 @@ class CalidadController extends Controller
       array_push($arreglo,$variable);
       return json_encode($arreglo);
     }
+    public function ajax2($id,$periodo,$anio){
+      $metas=\DB::select("
+      SELECT id_indicador from metas where id_indicador=".$id." and periodo= ".$periodo." and year(metas.created_at)=".$anio."
+      ");
+
+      $datos=\DB::select("
+      SELECT id_indicador from datos where id_indicador=".$id." and periodo= ".$periodo." and year(datos.created_at)=".$anio."
+      ");
+      $variable="";
+
+      if ($metas==null) {
+        $variable=1;
+      }
+
+      for ($i=0; $i <count($metas) ; $i++) {
+        $bandera=false;
+        for ($y=0; $y < count($datos); $y++) {
+          if ($datos{$y}->id_indicador == $metas{$i}->id_indicador) {
+            $bandera=true;
+          }
+        }
+        if ($bandera==false) {
+          //no hay
+          $variable=1;
+        }else {
+          //si hay
+          $variable=2;
+        }
+
+
+      }
+      return $variable;
+
+
+    }
 }

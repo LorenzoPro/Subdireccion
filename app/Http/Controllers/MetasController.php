@@ -35,8 +35,8 @@ class MetasController extends Controller
           'tendencia'=>$req->tendencia,
           'id_indicador'=>$req->id_indicador,
         ]);
-        return redirect()->to('/administracion');
-          with('mensaje','Indicador Agregado');
+
+        return 1;
 
       }
     }//llave insertar

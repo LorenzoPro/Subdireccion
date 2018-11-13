@@ -48,17 +48,17 @@
       <input type="text" class="yearpicker anio" id="yearpicker" name="anio" style="width: 100%;" value="">
     </div>
 
-    <button type="submit" name="btnir" class="btnagregar2 btnir">IR</button>
+    <button type="submit" name="btnir" class="btnagregar2 btnir"><i class="fas fa-check"></i></button>
   </div>
 
 
 
-<button type="button" class="btnagregar navbar-right btnCirculo2" data-toggle="modal" data-target=".datos">
-    <i class="glyphicon glyphicon-plus"></i>
+<button type="hidden" id="btndatos" class="btnagregar btn btn-success navbar-right btnCirculo2" data-toggle="modal" data-target=".datos">
+  <i class="fas fa-plus"></i>
 </button>
 
-<button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
-    <i class="glyphicon glyphicon-plus"></i>
+<button type="button" id="btnmeta" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
+    <i class="far fa-calendar-plus"></i>
 </button>
 
   <div class="row">
@@ -130,31 +130,33 @@
         <div class="card-body">
 
           {{ Form::open (array('url'=>'/administracion/metas','files'=>"true") )}}
-          <fieldset>
-            <div class="form-group">
-              <label for="">Meta</label>
-                  {{ Form::text('meta','',array('class'=>'form-control','placeholder'=>'%')  )}}
-            </div>
-            <div class="form-group">
-              <label for="">Tendecia</label>
-              {{  Form::select('tendencia',[
-              'Mantener' => 'Mantener',
-              'Disminuir' => 'Disminuir',
-              'Aumentar'=>'Aumentar'],null, ['class'=>'form-control']  )}}
-            </div>
-            <div class="form-group">
-              <label for="">Periodo</label>
-              {{  Form::select('periodo',[
-              '0' => 'Enero-Julio',
-              '1' => 'Agosto-Diciembre'],null, ['class'=>'form-control']  )}}
-            </div>
-            {{ Form::hidden('id_indicador','1',array('class'=>'form-control','id'=>'id_indicador')  )}}
 
             <div class="form-group">
-                {{ Form::submit('Aceptar',array('class'=>'btn btn-primary','data-toggle'=>'modal','data-target'=>'.datos')  )}}
-                <button type="button" class="contestar btn btn-success">Enviar</button>
+              <label for="">Meta</label>
+                  <input type="text" name="meta" class="form-control" value=""><br>
+
+              <label for="">Tendecia</label>
+              <select class="form-control" name="tendencia">
+                <option value="Disminuir">Disminuir</option>
+                <option value="Mantener">Mantener</option>
+                <option value="Aumentar">Aumentar</option>
+              </select>
+
+
+              <label for="">Periodo</label>
+              <select class="form-control" name="periodo">
+                <option value="0">Enero-Julio</option>
+                <option value="1">Agosto-Diciembre</option>
+              </select>
+
+            <input type="hidden" name="id_indicador" class="" value="1"><br>
+
+
+
+
             </div>
-          </fieldset>
+            <button type="button" name="button" class="btnMetas btn btn-success" data-toggle="modal" data-target=".datos" data-dismiss="modal">Enviar</button>
+
           {{ Form::close() }}
 
         </div>
@@ -225,8 +227,13 @@
     var id=1;
     var periodo=0;
     var anio = 2018;
+    var x=0;
+
     $('.reportes').fadeOut(1);
+    $("#btnmeta").fadeOut(.1);
     $('.subtitle').append("Selecciona el Indicador");
+
+
 
     console.log(id);
     $.ajax({
@@ -234,6 +241,9 @@
       method:'get',
     }).done(function(res){
 
+    });
+    $(".btnmetas").on("click", function(){
+      x=1;
     });
 
     $(".indicador").on("click", function(){
@@ -260,10 +270,12 @@
       periodo=periodo;
       id=id;
       anio=anio;
+
       recargar();
       nombre();
       carreras();
       periodos();
+      verificar();
       $('.subtitle').fadeOut(1);
       $('.subtitle').fadeIn(1000);
       $('.reportes').fadeIn(1000);
@@ -288,6 +300,20 @@
       }).done(function(res){
         console.log(res);
       });*/
+    }
+    function verificar(){
+      $.ajax({
+        url:'/administracion/calidad/ajax2/'+id+"/"+periodo+"/"+anio,
+        method:'get',
+      }).done(function(res){
+        console.log(res);
+        var x = parseInt(res);
+        if (x==1) {
+          $("#btnmeta").fadeIn(1000);
+        }else {
+          $("#btnmeta").fadeOut(1000);
+        }
+      });
     }
     function recargar(){
       $.ajax({
@@ -650,6 +676,22 @@
         }
       });
       });
+
+      $('.btnMetas').on("click",function(){
+
+        var form = $(this).parent('form');
+        $.ajax({
+          url:$(this).parent('form').attr('action'),
+          method:'POST',
+          data:$(this).parent('form').serialize()
+        }).done(function(res){
+          console.log(res);
+          var x = parseInt(res);
+          if(x==1){
+            form.fadeOut(200);
+          }
+        });
+        });
   });
 
 
