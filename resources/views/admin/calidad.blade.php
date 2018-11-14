@@ -29,6 +29,7 @@
     <div class="col-md-4">
       <h4 class="seleccionadores">Indicadores</h4>
       <select class="cate form-control" name="id_indicador" id="indicador">
+        <option value="" disabled selected>--Seleciona el Indicador--</option>
         @forelse($indicadores as $ind)
           <option value="{{$ind->id_indicador}}" data-id="{{ $ind->id_indicador }}" data-id2="{{$ind->id_indicador}}" class="indicador">{{$ind->nombre}}</option>
         @empty
@@ -39,6 +40,7 @@
     <div class="col-md-4">
       <h4 class="seleccionadores">Periodo</h4>
       <select class=" form-control" name="periodo" id="periodo">
+          <option value="" disabled selected>--Seleciona el periodo--</option>
           <option value="0" data-periodo="0" class="periodo">Enero-Julio</option>
           <option value="1" data-periodo="1" class="periodo">Agosto-Diciembre</option>
       </select>
@@ -109,12 +111,9 @@
 <br>
 <div class="row">
   <div class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
-
-    <button type="submit" name="button" class="btn btn-success reportes" style="width: 100%;" >Imprimir Reporte</button>
-
-
-
-
+    <button type="submit" name="button" class="btn btn-success estra" style="width: 100%; margin:3px;" ><i class="fas fa-plus"></i>&nbsp;Agregar Estrategias</button>
+    <button type="submit" name="button" class="btn btn-danger eliminar" style="width: 100%; margin:3px;" ><i class="fas fa-trash-alt"></i>&nbsp;Eliminar Indicador</button>
+    <button type="submit" name="button" class="btn btn-info reportes" style="width: 100%; margin:3px;" ><i class="fas fa-print"></i>&nbsp;Imprimir Reporte</button>
   </div>
 </div>
 
@@ -143,13 +142,9 @@
               </select>
 
 
-              <label for="">Periodo</label>
-              <select class="form-control" name="periodo">
-                <option value="0">Enero-Julio</option>
-                <option value="1">Agosto-Diciembre</option>
-              </select>
 
-            <input type="hidden" name="id_indicador" class="" value="1"><br>
+              <input type="hidden" name="periodo" class="periodos" value="0 "><br>
+              <input type="hidden" name="id_indicador" class="id_indicador" value="1"><br>
 
 
 
@@ -224,13 +219,18 @@
   <script>
 
   $(document).ready(function(){
+    var currentTime = new Date();
+    var year = currentTime.getFullYear();
     var id=1;
     var periodo=0;
-    var anio = 2018;
+    var anio = year;
     var x=0;
 
     $('.reportes').fadeOut(1);
+    $('.eliminar').fadeOut(1);
+    $('.estra').fadeOut(1);
     $("#btnmeta").fadeOut(.1);
+    $("#btndatos").fadeOut(.1);
     $('.subtitle').append("Selecciona el Indicador");
 
 
@@ -259,10 +259,16 @@
       var id2 = id;
       periodo = $(this).data('periodo');
       $(".periodo").val(periodo);
+      $(".periodos").val(periodo);
     });
     $('.anio').keyup(function(){
+      var currentTime = new Date();
       anio=$(this).val();
-      console.log(anio);
+      var year = currentTime.getFullYear();
+      console.log(year);
+      if (year>anio) {
+        $("#btnmeta").fadeOut(.1);
+      }
 
     });
     $(".btnir").on("click",function(){
@@ -271,14 +277,21 @@
       id=id;
       anio=anio;
 
+      console.log(anio);
+
+
+
       recargar();
       nombre();
       carreras();
       periodos();
       verificar();
+
       $('.subtitle').fadeOut(1);
       $('.subtitle').fadeIn(1000);
       $('.reportes').fadeIn(1000);
+      $('.eliminar').fadeIn(1000);
+      $('.estra').fadeIn(1000);
 
     });
     $(".reportes").on("click", function(){
@@ -288,6 +301,14 @@
       console.log('jalo');
       reporte();
     });
+    $(".eliminar").on("click", function(){
+      periodo=periodo;
+      id=id;
+      anio=anio;
+      console.log('jalo');
+      elimina();
+    });
+
     function reporte(){
       $('body').load('administracion/reportes/index/'+id+"/"+periodo+"/"+anio, function(e){
         console.log(e);
@@ -301,6 +322,15 @@
         console.log(res);
       });*/
     }
+    function elimina(){
+      $.ajax({
+        url:'/administracion/calidad/eliminar/'+id+"/"+periodo+"/"+anio,
+        method:'get',
+      }).done(function(res){
+        console.log(res);
+        location.reload();
+      });
+    }
     function verificar(){
       $.ajax({
         url:'/administracion/calidad/ajax2/'+id+"/"+periodo+"/"+anio,
@@ -309,7 +339,8 @@
         console.log(res);
         var x = parseInt(res);
         if (x==1) {
-          $("#btnmeta").fadeIn(1000);
+          $("#btnmeta").fadeIn(1);
+
         }else {
           $("#btnmeta").fadeOut(1000);
         }
@@ -594,6 +625,8 @@
         }
         if (p==null) {
           $('.reportes').fadeOut(1);
+          $('.eliminar').fadeOut(1);
+          $('.estra').fadeOut(1);
         }
 
           console.log(anio1);

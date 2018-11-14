@@ -51,6 +51,8 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/reportes/index/{id}/{periodo}/{anio}','ReportesController@index');
   Route::get('/calidad/nombre/{id}','CalidadController@nombre');
 
+  Route::get('/calidad/eliminar/{id}/{periodo}/{anio}','CalidadController@eliminar');
+
 
 
 

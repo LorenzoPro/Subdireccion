@@ -53,7 +53,7 @@ class CalidadController extends Controller
       return view('admin.calidad')
         ->with('indicadores', $indicador)
         ->with('carreras', $carreras)
-        ->with('tiempo',date_format($time, 'd-M-Y '))
+        ->with('tiempo',date_format($time, 'Y'))
         ->with('metas', $metas);
 
 
@@ -63,6 +63,21 @@ class CalidadController extends Controller
           ->where('id_indicador','=',$req->id_indicador)
           ->get();
           return json_encode($datos);
+    }
+    public function eliminar($id,$periodo,$anio){
+      $meta=\DB::select("
+      DELETE from metas where id_indicador=".$id." and periodo= ".$periodo." and year(metas.created_at)=".$anio."
+      ");
+
+      $datos=\DB::select("
+      DELETE from datos where id_indicador=".$id." and periodo= ".$periodo." and year(datos.created_at)=".$anio."
+      ");
+
+
+
+      return 1;
+
+
     }
     public function store(Request $req){
 
@@ -240,10 +255,15 @@ class CalidadController extends Controller
       SELECT id_indicador from datos where id_indicador=".$id." and periodo= ".$periodo." and year(datos.created_at)=".$anio."
       ");
       $variable="";
+      $anio2=date('Y');
 
       if ($metas==null) {
         $variable=1;
       }
+      if ($datos==null) {
+        $variable=1;
+      }
+    
 
       for ($i=0; $i <count($metas) ; $i++) {
         $bandera=false;

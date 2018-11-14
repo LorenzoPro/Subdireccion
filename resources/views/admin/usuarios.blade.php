@@ -24,7 +24,7 @@
 
 @section('usuarios')
 <div class="row">
-  <div class="title" style="text-align: center; padding-top:110px;">Usuarios</div>
+  <div class="title" style="text-align: center;"><i class="fas fa-users padRight"></i>Usuarios</div>
   <div class="subtitle" style="text-align: center">Consulta, agrega y elimina.</div>
 </div>
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
@@ -61,12 +61,12 @@
                       data-email="{{  $usu->email  }}"
                       data-privilegios="{{  $usu->privilegios  }}"
                       >
-                        <i class="glyphicon glyphicon-pencil"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
                     </th>
                     <th>
                         <button class="btn" type="button"  data-toggle="modal" data-target=".eliminar{{ $usu->id }}">
-                          <i class="glyphicon glyphicon-trash"></i>
+                          <i class="fas fa-trash"></i>
                         </button>
 
                         <!-- Modal -->

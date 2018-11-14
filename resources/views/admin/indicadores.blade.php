@@ -63,12 +63,12 @@
                       data-v1="{{  $ind->variable1  }}"
                       data-v2="{{  $ind->variable2  }}"
                       >
-                        <i class="glyphicon glyphicon-pencil"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
                     </th>
                     <th>
                         <button class="btn" type="button"  data-toggle="modal" data-target=".eliminar{{ $ind->id_indicador }}">
-                          <i class="glyphicon glyphicon-trash"></i>
+                          <i class="fas fa-trash"></i>
                         </button>
 
                         <!-- Modal -->
