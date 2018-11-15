@@ -25,43 +25,39 @@
 
 @section('carreras')
 <div class="row">
-  <div class="title" style="text-align: center;"><i class="fas fa-user-graduate padRight">Ingenierias</div>
+  <div class="title" style="text-align: center;"><i class="fas fa-user-graduate padRight"></i>Ingenierias</div>
   <div class="subtitle" style="text-align: center">Consulta, agrega y elimina.</div>
 </div>
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
-    <i class="glyphicon glyphicon-plus"></i>
+    <i class="fas fa-plus"></i>
 </button>
 <div class="row">
   <div class="table col-md-10 col-sm-10 col-lg-10" style="padding-left:80px; padding-right:80px;">
-    <table class="table">
-      <tbody>
-        <tr>
-          <th>
-            <table class="table">
+
+
+            <table class="table" id="customers">
               <thead>
                 <tr>
-
-                  <th>Nombre</th>
-                  <th>Editar</th>
-                  <th>Eliminar</th>
+                  <td>Nombre</td>
+                  <td>Editar</td>
+                  <td>Borrar</td>
                 </tr>
               </thead>
               <tbody>
                 @forelse($carreras as $car)
                   <tr>
-
                     <th>{{ $car->nombre }}</th>
-                    <th>
+                    <th class="centro">
                       <button type="button" name="btneditar" data-toggle="modal" data-target=".editar" class="btn btnedit"
                       data-id="{{ $car->id_carrera }}"
                       data-nombre="{{  $car->nombre  }}"
                       >
-                        <i class="glyphicon glyphicon-pencil"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
                     </th>
-                    <th>
+                    <th class="centro">
                         <button class="btn" type="button"  data-toggle="modal" data-target=".eliminar{{ $car->id_carrera }}">
-                          <i class="glyphicon glyphicon-trash"></i>
+                          <i class="fas fa-trash"></i>
                         </button>
 
                         <!-- Modal -->
@@ -94,12 +90,7 @@
                   <p>Sin Registros</p>
                 @endforelse
               </tbody>
-              </table>
-
-          </th>
-        </tr>
-      </tbody>
-    </table>
+            </table>
   </div>
 </div>
 

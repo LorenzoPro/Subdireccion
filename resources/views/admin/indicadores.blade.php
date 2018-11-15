@@ -29,22 +29,19 @@
   <div class="subtitle" style="text-align: center">Consulta, agrega y elimina.</div>
 </div>
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
-    <i class="glyphicon glyphicon-plus"></i>
+    <i class="fas fa-plus"></i>
 </button>
 <div class="row">
   <div class="table col-md-10 col-sm-10 col-lg-10" style="padding-left:80px; padding-right:80px;">
-    <table class="table table-striped">
-      <tbody>
-        <tr>
-          <th>
-            <table class="table table-striped">
+
+            <table class="table" id="customers">
               <thead>
                 <tr>
-                  <th>NOMBRE</th>
-                  <th>AREA</th>
-                  <th>OBJETIVO</th>
-                  <th>EDITAR</th>
-                  <th>ELIMINAR</th>
+                  <td>Nombre</td>
+                  <td>Area</td>
+                  <td>Objetivo</td>
+                  <td>Editar</td>
+                  <td>Borrar</td>
                 </tr>
               </thead>
               <tbody>
@@ -54,7 +51,7 @@
                     <th >{{ $ind->nombre }}</th>
                     <th>{{ $ind->area }}</th>
                     <th>{{ $ind->objetivo }}</th>
-                    <th>
+                    <th class="centro">
                       <button type="button" name="btneditar" data-toggle="modal" data-target=".editar" class="btn btnedit"
                       data-id="{{ $ind->id_indicador }}"
                       data-nombre="{{  $ind->nombre  }}"
@@ -66,7 +63,7 @@
                         <i class="fas fa-edit"></i>
                       </button>
                     </th>
-                    <th>
+                    <th class="centro">
                         <button class="btn" type="button"  data-toggle="modal" data-target=".eliminar{{ $ind->id_indicador }}">
                           <i class="fas fa-trash"></i>
                         </button>
@@ -103,10 +100,6 @@
               </tbody>
               </table>
 
-          </th>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
 

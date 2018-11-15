@@ -28,23 +28,20 @@
   <div class="subtitle" style="text-align: center">Consulta, agrega y elimina.</div>
 </div>
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
-    <i class="glyphicon glyphicon-plus"></i>
+    <i class="fas fa-plus"></i>
 </button>
 <div class="row">
   <div class="table col-md-10 col-sm-10 col-lg-10" style="padding-left:80px; padding-right:80px;">
-    <table class="table table-striped">
-      <tbody>
-        <tr>
-          <th>
-            <table class="table table-condensed">
-              <thead class="">
-                <tr class="info">
+
+            <table class="table" id="customers">
+              <thead>
+                <tr>
                   <!-- <th>#</th> -->
-                  <th>Nombre</th>
-                  <th>Correo</th>
-                  <th>Privilegios</th>
-                  <th>Editar</th>
-                  <th>Eliminar</th>
+                  <td>Nombre</td>
+                  <td>Correo</td>
+                  <td>Privilegios</td>
+                  <td>Editar</td>
+                  <td>Eliminar</td>
                 </tr>
               </thead>
               <tbody>
@@ -54,7 +51,7 @@
                     <th>{{ $usu->name }}</th>
                     <th>{{ $usu->email }}</th>
                     <th>{{ $usu->privilegios }}</th>
-                    <th>
+                    <th class="centro">
                       <button type="button" name="btneditar" data-toggle="modal" data-target=".editar" class="btn btnedit"
                       data-id="{{ $usu->id }}"
                       data-name="{{  $usu->name  }}"
@@ -64,7 +61,7 @@
                         <i class="fas fa-edit"></i>
                       </button>
                     </th>
-                    <th>
+                    <th class="centro">
                         <button class="btn" type="button"  data-toggle="modal" data-target=".eliminar{{ $usu->id }}">
                           <i class="fas fa-trash"></i>
                         </button>
@@ -101,10 +98,6 @@
               </tbody>
               </table>
 
-          </th>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
 

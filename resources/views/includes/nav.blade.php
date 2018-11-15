@@ -92,7 +92,7 @@
 
 
     <div class="col-md-3" style="color:white; margin-top:5px;">
-      | &nbsp; &nbsp; &nbsp; &nbsp;Hoy es el día:
+      | &nbsp; &nbsp; &nbsp; Hoy es el día:&nbsp;{{ date('d-M-Y') }}
     </div>
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header col-md-4">
