@@ -30,7 +30,7 @@
       <h4 class="seleccionadores">Indicadores</h4>
       <select class="cate form-control" name="id_indicador" id="indicador">
         <option value="" disabled selected>--Seleciona el Indicador--</option>
-        @forelse($indicadores as $ind)
+        @forelse($asignaciones as $ind)
           <option value="{{$ind->id_indicador}}" data-id="{{ $ind->id_indicador }}" data-id2="{{$ind->id_indicador}}" class="indicador">{{$ind->nombre}}</option>
         @empty
           <option value=""></option>
@@ -40,14 +40,14 @@
     <div class="col-md-4">
       <h4 class="seleccionadores">Periodo</h4>
       <select class=" form-control" name="periodo" id="periodo">
-          <option value="" disabled selected>--Seleciona el periodo--</option>
+          <option value="3" disabled selected>--Seleciona el periodo--</option>
           <option value="0" data-periodo="0" class="periodo">Enero-Julio</option>
           <option value="1" data-periodo="1" class="periodo">Agosto-Diciembre</option>
       </select>
     </div>
     <div class="col-md-3">
       <h4 class="seleccionadores">Año</h4>
-      <input type="text" class="yearpicker anio" id="yearpicker" name="anio" style="width: 100%;" value="">
+      <input type="text"  name="anio" style="width: 100%;" value="">
     </div>
 
     <button type="submit" name="btnir" class="btnagregar2 btnir"><i class="fas fa-check"></i></button>
@@ -75,11 +75,11 @@
         <span class="titulo-inicio titulo-number variable2">0</span>
       </div>
     </div>
-    <div class="col-md-3 graph">
+    <div class="col-md-3 graph myChart">
       <h4 class="titleGraphs titg">Tutorias</h4>
       <canvas id="myChart" width="400" height="400"></canvas>
     </div>
-    <div class="col-md-3 graph">
+    <div class="col-md-3 graph myChart2">
       <h4 class="titleGraphs titg2" >Inscritos</h4>
       <canvas id="myChart2" width="400" height="400"></canvas>
     </div>
@@ -87,11 +87,11 @@
 
 
   <div class="row">
-    <div class="col-md-6 graphbar">
+    <div class="col-md-6 graphbar myChartbar">
       <h4 class="titleGraphs">Total de Hombres y mujeres</h4>
       <canvas id="myChartbar" width="400" height="300"></canvas>
     </div>
-    <div class="col-md-6 graphbar">
+    <div class="col-md-6 graphbar myChartbar2">
       <h4 class="titleGraphs">Total de Hombres y mujeres</h4>
       <canvas id="myChartbar2" width="400" height="300"></canvas>
     </div>
@@ -99,7 +99,7 @@
 
 
 <div class="row">
-  <div class="col-md-8 graph2">
+  <div class="col-md-8 graph2 myChartline">
     <h4 class="titleGraphs">Comportamiento Anual</h4>
     <canvas id="myChartline" width="400" height="150"></canvas>
   </div>
@@ -180,8 +180,8 @@
             <input type="hidden" name="id_carrera" class="id_carrera" value="{{$car->id_carrera}}">
 
             <div class="from-group">
-                <input type="text" name="id_indicador" class="id_indicador" value="1"><br>
-                <input type="text" name="periodo" class="periodo" id="periodotext" value="0"><br>
+                <input type="hidden" name="id_indicador" class="id_indicador" value="1"><br>
+                <input type="hidden" name="periodo" class="periodo" id="periodotext" value="0"><br>
               <h3 for="">{{$car->nombre}}</h3><br>
               <h5 for="" style="text-align: center;">Variable 1</h5>
               Hombres
@@ -206,7 +206,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-success btnlisto" data-dismiss="modal">Listo</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -222,7 +222,7 @@
     var currentTime = new Date();
     var year = currentTime.getFullYear();
     var id=1;
-    var periodo=0;
+    var periodo=3;
     var anio = year;
     var x=0;
 
@@ -245,11 +245,15 @@
     $(".btnmetas").on("click", function(){
       x=1;
     });
+    $(".btnlisto").on("click", function(){
+
+window.location.href = "administracion/calidad";
+    });
 
     $(".indicador").on("click", function(){
       id = $(this).data('id');
       periodo=periodo;
-      console.log(anio);
+      console.log(id);
       var id2 = $(this).data('id2');
       $("#id_indicador").val(id);
       $(".id_indicador").val(id2);
@@ -258,7 +262,8 @@
     $(".periodo").on("click", function(){
       var id2 = id;
       periodo = $(this).data('periodo');
-      $(".periodo").val(periodo);
+      console.log(periodo);
+      //$(".periodo").val(periodo);
       $(".periodos").val(periodo);
     });
     $('.anio').keyup(function(){
@@ -298,7 +303,9 @@
       periodo=periodo;
       id=id;
       anio=anio;
-      console.log('jalo');
+      console.log(periodo);
+      console.log(id);
+      console.log(anio);
       reporte();
     });
     $(".eliminar").on("click", function(){
@@ -311,10 +318,20 @@
 
     function reporte(){
       $('body').load('administracion/reportes/index/'+id+"/"+periodo+"/"+anio, function(e){
-        console.log(e);
+        console.error(e);
         //window.print();
-        //location.reload();
+        setTimeout(function() {
+          window.print();
+          setTimeout(function() {
+
+window.location.href = "administracion/calidad";
+          },1000);
+        },500);
+
+
       });
+
+
   /*  $.ajax({
         url:'administracion/reportes/index/'+id+"/"+periodo+"/"+anio,
         method:'get',
@@ -377,6 +394,8 @@
             $('.variable2').append(0);
           }
 ////////////////////////////////////////////////////////////////////////////////
+        $("canvas#myChart").remove();
+        $("div.myChart").append('<canvas id="myChart" width="400" height="400"></canvas>');
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
             type: 'doughnut',
@@ -403,6 +422,7 @@
                     ],
                     borderWidth: 1
                 }]
+
             },
             options: {
                 scales: {
@@ -413,8 +433,15 @@
                     }]
                 }
             }
+
         });
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////
+        $("canvas#myChart2").remove();
+        $("div.myChart2").append('<canvas id="myChart2" width="400" height="400"></canvas>');
         var ctx2 = document.getElementById("myChart2");
         var myChart2 = new Chart(ctx2, {
           type: 'doughnut',
@@ -508,6 +535,8 @@
 
       //  console.log(nombres2);
 
+        $("canvas#myChartbar").remove();
+        $("div.myChartbar").append('<canvas id="myChartbar" width="400" height="300"></canvas>');
         var ctxlbar = document.getElementById("myChartbar");
         var myChartbar = new Chart(ctxlbar, {
             type: 'bar',
@@ -551,6 +580,8 @@
        }
         });
 
+        $("canvas#myChartbar2").remove();
+        $("div.myChartbar2").append('<canvas id="myChartbar2" width="400" height="300"></canvas>');
         var ctxlbar2 = document.getElementById("myChartbar2");
         var myChartbar2 = new Chart(ctxlbar2, {
             type: 'bar',
@@ -630,6 +661,8 @@
         }
 
           console.log(anio1);
+          $("canvas#myChartline").remove();
+          $("div.myChartline").append('<canvas id="myChartline" width="400" height="150"></canvas>');
           var ctxline = document.getElementById("myChartline");
           var myChartline = new Chart(ctxline, {
               type: 'line',
@@ -649,6 +682,8 @@
              }
          }
           });
+
+
           console.log(p);
           /////////////////////////////////grafica de porcentaje
           $('.loader1').ClassyLoader({
@@ -661,6 +696,7 @@
               remainingLineColor: 'rgba(0,0,0,0.1)'
           });
       });
+
 
     }
 

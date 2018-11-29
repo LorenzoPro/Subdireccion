@@ -28,7 +28,10 @@
   <div class="subtitle" style="text-align: center">Consulta, agrega y elimina.</div>
 </div>
 <button type="button" class="btnagregar navbar-right btnCirculo" data-toggle="modal" data-target=".usuarios">
-    <i class="fas fa-plus"></i>
+    <i class="fas fa-user-plus"></i>
+</button>
+<button type="button" id="btndatos" class="btnagregar btn btn-success navbar-right btnCirculo2 btnasignar" data-toggle="modal" data-target=".asignar">
+  <i class="fas fa-plus"></i>
 </button>
 <div class="row">
   <div class="table col-md-10 col-sm-10 col-lg-10" style="padding-left:80px; padding-right:80px;">
@@ -41,7 +44,7 @@
                   <td>Correo</td>
                   <td>Privilegios</td>
                   <td>Editar</td>
-                  <td>Eliminar</td>
+                  <td>Borrar</td>
                 </tr>
               </thead>
               <tbody>
@@ -100,6 +103,55 @@
 
   </div>
 </div>
+
+ <div class="row">
+   <div class="table col-md-10 col-sm-10 col-lg-10" style="padding-left:80px; padding-right:80px;">
+     <table class="table" id="customers">
+       <thead>
+         <tr>
+           <td>Indicadores de los Usuarios</td>
+         </tr>
+       </thead>
+     </table>
+     @forelse($usuarios as $usu)
+     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+     <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{$usu->id}}" aria-expanded="true" aria-controls="collapseOne" style="font-size:20px;">
+            <i class="fas fa-caret-right"></i>{{ $usu->name }}
+          </a>
+        </h4>
+      </div>
+      <div id="{{ $usu->id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          <table class="table" id="customers">
+
+            <tbody>
+              @forelse($asignaciones as $asi)
+              <tr>
+                @if($usu->id==$asi->id)
+                <th>{{ $asi->nombre }}</th>
+                <th></th>
+              </tr>
+                @endif
+              @empty
+                <p>Sin Registros</p>
+              @endforelse
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    </div>
+    @empty
+      <p>Sin Registros</p>
+    @endforelse
+   </div>
+
+
+ </div>
 
 <div class="modal fade editar" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog" role="document">
@@ -190,6 +242,55 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade asignar" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title txtcenter-sans" id="gridSystemModalLabel">Agrega un usuario nuevo.</h4>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+
+          {{ Form::open (array('url'=>'/administracion/asignaciones') )}}
+          <fieldset>
+            <div class="form-group">
+              <label for="">Usuario</label>
+              <select class="cate form-control" name="id" id="id">
+                <option value="" disabled selected>--Seleciona el Usuario--</option>
+                @forelse($usuarios as $usu)
+                  <option value="{{$usu->id}}" data-id="{{ $usu->id }}" class="usuario">{{$usu->name}}</option>
+                @empty
+                  <option value=""></option>
+                @endforelse
+              </select>
+              <br>
+              <label for="">Indicadores</label>
+              <select class="cate form-control" name="id_indicador" id="indicador">
+                <option value="" disabled selected>--Seleciona el Indicador--</option>
+                @forelse($indicadores as $ind)
+                  <option value="{{$ind->id_indicador}}" data-id="{{ $ind->id_indicador }}" data-id2="{{$ind->id_indicador}}" class="indicador">{{$ind->nombre}}</option>
+                @empty
+                  <option value=""></option>
+                @endforelse
+              </select>
+            </div>
+            <div class="form-group">
+                {{ Form::submit('Asignar',array('class'=>'btn btn-primary')  )}}
+            </div>
+          </fieldset>
+          {{ Form::close() }}
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @section('jQueryUsuarios')
   <script type="text/javascript">
     $(document).ready(function(){
@@ -205,6 +306,21 @@
         $('#nameEmail').val(email);
         $('#editarPrivilegios').val(priv);
         $("#nomModal").text(nom);
+
+      });
+      $('.btnasignar').on("click", function(){
+      //  var nom2=$(this).data('id');
+      //  $('#nameEditar').val(nom2);
+      //  $('#idForm').val(nom2);
+        $.ajax({
+          method:'POST',
+          url:'/administracion/usuarios/ajax',
+          data: $('#miForm').serialize(),
+        }).done(function (respuesta){
+          $('#comboAjax').find('option').remove();
+          console.log(respuesta);
+          $('#comboAjax').append(respuesta);
+        });
 
       });
     });

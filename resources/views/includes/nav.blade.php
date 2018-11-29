@@ -68,7 +68,7 @@
 </div>
   <div class="navName">ADMINISTRACIÓN</div>
   <ul class="nav nav-pills nav-stacked">
-      <li role="presentation"><a href="{{ url('/administracion/calidad') }}"><i class="fas fa-project-diagram padRight"></i>Divisiones Académicas</a></li>
+      <li role="presentation"><a href="{{ url('/administracion') }}"><i class="fas fa-project-diagram padRight"></i>Divisiones Académicas</a></li>
 
     <li role="dropdown"><a href="{{ url('/administracion/indicadores') }}"><i class="fas fa-file-contract padRight"></i>Indicadores</a></li>
     <li role="presentation"><a href="{{ url('/administracion/usuarios') }}"><i class="fas fa-users padRight"></i>Usuarios</a></li>

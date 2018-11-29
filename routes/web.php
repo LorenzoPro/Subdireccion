@@ -23,6 +23,9 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/usuarios','UserController@index');
   Route::resource('usuarios','UserController');
 
+  Route::get('/asignaciones','AsignacionesController@index');
+  Route::resource('asignaciones','AsignacionesController');
+
   Route::get('/carreras','CarrerasController@index');
   Route::resource('carreras','CarrerasController');
 
@@ -42,6 +45,7 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::resource('reporte','ImprimirController');
 
   Route::post('/calidad/ajax','CalidadController@ajax');
+  Route::post('/usuarios/ajax','UserController@ajax');
   //Route::get('/calidad/Graficas','CalidadController@Graficas');
   Route::get('/calidad/Graficas/{id}/{periodo}/{anio}','CalidadController@Graficas');
   Route::get('/calidad/ajax2/{id}/{periodo}/{anio}','CalidadController@ajax2');

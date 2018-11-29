@@ -20,6 +20,18 @@ class CalidadController extends Controller
         ->orderBy('id_indicador')
         ->get();
 
+        $id = \Auth::user()->id;
+
+        $asignaciones=\DB::select("
+          select * from indicadores
+          INNER JOIN asignaciones on asignaciones.id_indicador = indicadores.id_indicador
+          INNER JOIN users on users.id = asignaciones.id
+          where users.id=".$id."
+        ");
+
+
+
+
       $carreras=\DB::table('carreras')
         ->orderBy('id_carrera')
         ->get();
@@ -52,7 +64,9 @@ class CalidadController extends Controller
 
       return view('admin.calidad')
         ->with('indicadores', $indicador)
+
         ->with('carreras', $carreras)
+        ->with('asignaciones', $asignaciones)
         ->with('tiempo',date_format($time, 'Y'))
         ->with('metas', $metas);
 
@@ -263,7 +277,7 @@ class CalidadController extends Controller
       if ($datos==null) {
         $variable=1;
       }
-    
+
 
       for ($i=0; $i <count($metas) ; $i++) {
         $bandera=false;

@@ -20,10 +20,49 @@ class UserController extends Controller
         //->take(10);
         ->orderBy('id','name')
         ->get();
+
+        
+      $asignaciones=\DB::select("
+        select * from indicadores
+        INNER JOIN asignaciones on asignaciones.id_indicador = indicadores.id_indicador
+        INNER JOIN users on users.id = asignaciones.id
+      ");
+
+
+      $indicador=\DB::table('indicadores')
+        ->orderBy('id_indicador')
+        ->get();
       $titulo = "ITSNCG - Usuarios";
       return view('admin.usuarios')
         ->with('titulo', $titulo)
-        ->with('usuarios', $usuarios);
+        ->with('usuarios', $usuarios)
+        ->with('asignaciones', $asignaciones)
+        ->with('indicadores', $indicador);
+  }
+  public function ajax(Request $req){
+    $registros=\DB::select("
+      select * from indicadores
+      INNER JOIN asignaciones on asignaciones.id_indicador = indicadores.id_indicador
+    ");
+    $usuarios2=\DB::table('users')
+        ->orderBy('id')
+        ->get();
+    $todo="";
+
+    for ($i=0; $i < count($usuarios2); $i++) {
+      $bandera=false;
+      for ($y=0; $y < count($registros); $y++) {
+        if($registros{$y}->id == $usuarios2{$i}->id){
+          $bandera=true;
+        }
+      }
+      if($bandera==false){
+         $todo=$todo.'<option value="'.$registros{$i}->id_indicador.'">'.$registros{$i}->nombre.'</option>';
+      }
+    }
+    dd($todo);
+
+  return $todo;
   }
   public function store(Request $req){
     $validator = Validator::make($req->all(),[
