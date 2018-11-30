@@ -265,6 +265,7 @@
               <th>H</th>
               <th>M</th>
               <th>Total desgose</th>
+              <th>Observaciones</th>
             </tr>
           </thead>
           <tbody>
@@ -276,6 +277,7 @@
               <td >{{ $car->nombres }}</td>
               <td>{{ $car->hombres2 }}</td>
               <td>{{ $car->mujeres2 }}</td>
+              <td>{{ $car->desglose }}%</td>
             </tr>
 
             @empty
@@ -347,28 +349,28 @@
             <tbody>
               <tr>
                 <td>{{str_replace('"', ' ', $anio5)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal5)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic5)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal5)}}%</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic5)}}%</td>
               </tr>
               <tr>
                 <td>{{str_replace('"', ' ', $anio4)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal4)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic4)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal4)}}%</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic4)}}%</td>
               </tr>
               <tr>
                 <td>{{str_replace('"', ' ', $anio3)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal3)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic3)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal3)}}%</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic3)}}%</td>
               </tr>
               <tr>
                 <td>{{str_replace('"', ' ', $anio2)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal2)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic2)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal2)}}%</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic2)}}%</td>
               </tr>
               <tr>
                 <td>{{str_replace('"', ' ', $anio)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal1)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic1)}}</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinal1)}}%</td>
+                <td>{{str_replace('"', ' ', $porcentajeFinaldic1)}}%</td>
               </tr>
             </tbody>
           </table>
@@ -443,9 +445,13 @@
         data: {
           labels: [{!!$anio5!!},{!!$anio4!!},{!!$anio3!!},{!!$anio2!!},{!!$anio!!}],
           datasets: [{
-              label: "Porcentaje  ",
+              label: "Ene-Jul %  ",
               borderColor: 'rgb(255, 99, 244)',
               data: [{!!$porcentajeFinal5!!},{!!$porcentajeFinal4!!},{!!$porcentajeFinal3!!},{!!$porcentajeFinal2!!},{!!$porcentajeFinal1!!}],
+          },{
+              label: "Ago-Dic %  ",
+              borderColor: "#3cba9f",
+              data: [{!!$porcentajeFinaldic5!!},{!!$porcentajeFinaldic4!!},{!!$porcentajeFinaldic3!!},{!!$porcentajeFinaldic2!!},{!!$porcentajeFinaldic1!!}],
           }]
       },
       options: {

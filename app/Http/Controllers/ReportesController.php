@@ -59,7 +59,9 @@ class ReportesController extends Controller
 
       //TOTAL DE HOMBRES Y MUJERES DE LA VARIABLE 1 CON SU RESPECTIVA CARRERA;
       $carrerasV11=\DB::select("
-      SELECT carreras.nombre as nombres, datos.hombres,datos.mujeres, datos.hombres2, datos.mujeres2 from datos
+      SELECT carreras.nombre as nombres, datos.hombres,datos.mujeres, datos.hombres2, datos.mujeres2,
+      ((datos.hombres+datos.mujeres)/(datos.hombres2+datos.mujeres2))*100 as desglose
+      from datos
       INNER JOIN indicadores on indicadores.id_indicador= datos.id_indicador
       INNER JOIN metas on datos.id_indicador = metas.id_indicador
       INNER JOIN carreras on carreras.id_carrera = datos.id_carrera
@@ -72,6 +74,7 @@ class ReportesController extends Controller
       $valores2="";
       $valores3="";
       $valores4="";
+      $valores5="";
 
       for($i = 0; $i<count($carrerasV11); $i++){
         $carrerasV1 = $carrerasV1 . '"' .$carrerasV11{$i}->nombres.'",';
@@ -79,7 +82,15 @@ class ReportesController extends Controller
         $valores2 = $valores2 . $carrerasV11{$i}->mujeres.',';
         $valores3 = $valores3 . $carrerasV11{$i}->hombres2.',';
         $valores4 = $valores4 . $carrerasV11{$i}->mujeres2.',';
+        $valores5 = $valores5 . $carrerasV11{$i}->desglose.',';
       }//llave del for
+      if ($carrerasV11==null) {
+        $valores1=0;
+        $valores2=0;
+        $valores3=0;
+        $valores4=0;
+        $valores5=0;
+      }
 
       //TOTAL DE porcentajes CON SUS ANIOS
       $anio2=$anio-1;
@@ -90,6 +101,7 @@ class ReportesController extends Controller
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
         from datos where id_indicador=".$id." and periodo =0 and year(datos.created_at)=".$anio."
       ");
+
       $porcentaje2=\DB::select("
         SELECT ((SUM(hombres)+sum(mujeres))/(sum(hombres2)+sum(mujeres2)))*100 as Porcentaje
         from datos where id_indicador=".$id." and periodo =0 and year(datos.created_at)=".$anio2."
@@ -235,7 +247,8 @@ class ReportesController extends Controller
         $porcentajeFinal4=0;
         $porcentajeFinal5=0;
       }
-      if ($porcentajeFinaldic2==null) {
+      if ($porcentajeFinaldic1==null) {
+        $porcentajeFinaldic1=0;
         $porcentajeFinaldic2=0;
         $porcentajeFinaldic3=0;
         $porcentajeFinaldic4=0;

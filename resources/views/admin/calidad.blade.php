@@ -111,13 +111,52 @@
 <br>
 <div class="row">
   <div class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
-    <button type="submit" name="button" class="btn btn-success estra" style="width: 100%; margin:3px;" ><i class="fas fa-plus"></i>&nbsp;Agregar Estrategias</button>
+    <button type="submit" name="button" class="btn btn-success estra" data-toggle="modal" data-target=".estrategias" style="width: 100%; margin:3px;" ><i class="fas fa-plus"></i>&nbsp;Agregar Estrategias</button>
     <button type="submit" name="button" class="btn btn-danger eliminar" style="width: 100%; margin:3px;" ><i class="fas fa-trash-alt"></i>&nbsp;Eliminar Indicador</button>
     <button type="submit" name="button" class="btn btn-info reportes" style="width: 100%; margin:3px;" ><i class="fas fa-print"></i>&nbsp;Imprimir Reporte</button>
   </div>
 </div>
 
 @endsection
+<div class="modal fade estrategias" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title txtcenter-sans" id="gridSystemModalLabel">Agregar Estrategias y Observaciones.</h4>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+
+          {{ Form::open (array('url'=>'/administracion/estrategias','files'=>"true") )}}
+
+            <div class="form-group">
+              <label for="">Estrategias</label>
+                  <textarea name="estrategias" rows="8" cols="65"></textarea>
+              <label for="">Observaciones</label>
+                  <textarea name="observaciones" rows="8" cols="65"></textarea>
+
+              <input type="hidden" name="periodo" class="periodos" value="0 "><br>
+              <input type="hidden" name="id_indicador" class="id_indicador" value="1"><br>
+
+
+
+
+            </div>
+            <button type="submit" name="button" class="btnMetas btn btn-success">Enviar</button>
+
+          {{ Form::close() }}
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="modal fade usuarios" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -247,7 +286,7 @@
     });
     $(".btnlisto").on("click", function(){
 
-window.location.href = "administracion/calidad";
+window.location.href = "administracion";
     });
 
     $(".indicador").on("click", function(){
@@ -324,7 +363,7 @@ window.location.href = "administracion/calidad";
           window.print();
           setTimeout(function() {
 
-window.location.href = "administracion/calidad";
+window.location.href = "administracion";
           },1000);
         },500);
 

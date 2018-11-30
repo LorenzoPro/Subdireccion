@@ -13,9 +13,9 @@ class AsignacionesController extends Controller
       $this->middleware('auth');
   }
   public function index(){
-    $title = "Oneami - Preguntas";
-    return view('admin.usuarios')
-      ->with('title', $title);
+
+    return view('admin.usuarios');
+
   }
 
   public function store(Request $req){

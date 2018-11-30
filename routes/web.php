@@ -26,6 +26,9 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   Route::get('/asignaciones','AsignacionesController@index');
   Route::resource('asignaciones','AsignacionesController');
 
+  Route::get('/estrategias','EstrategiasController@index');
+  Route::resource('estrategias','EstrategiasController');
+
   Route::get('/carreras','CarrerasController@index');
   Route::resource('carreras','CarrerasController');
 

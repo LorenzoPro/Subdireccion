@@ -29,9 +29,6 @@ class CalidadController extends Controller
           where users.id=".$id."
         ");
 
-
-
-
       $carreras=\DB::table('carreras')
         ->orderBy('id_carrera')
         ->get();
