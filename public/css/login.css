@@ -6,7 +6,7 @@ background-color:   #f2f2f2;
 }
 
 #midLogo{
-  height: 45px;
+  height: 80px;
 }
 
 .inicia-sesion{
@@ -16,6 +16,9 @@ background-color:   #f2f2f2;
   font-weight: 700;
   line-height: 2rem;
   margin-bottom: 20px;
+}
+.logindiv{
+  margin-top: 60px;
 }
 
 .input-style{
@@ -47,7 +50,7 @@ background-color:   #f2f2f2;
 }
 
 .card{
-  padding-top: 30px;
+  padding-top:35px;
   padding-bottom: 30px;
   padding-left: 50px;
   padding-right: 50px;

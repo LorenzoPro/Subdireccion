@@ -171,6 +171,30 @@ class ReportesController extends Controller
       and datos.id_indicador=".$id." and Year(datos.created_at)=".$anio."
       ");
 
+      $estrategias =\DB::select("
+      SELECT estrategias  FROM estrategias
+      INNER JOIN datos on datos.id_indicador = estrategias.id_indicador
+      and estrategias.periodo=".$periodo." and datos.periodo=".$periodo."
+      and datos.id_indicador=".$id." and Year(datos.created_at)=".$anio."
+      LIMIT 1
+      ");
+      $observaciones =\DB::select("
+      SELECT observaciones  FROM estrategias
+      INNER JOIN datos on datos.id_indicador = estrategias.id_indicador
+      and estrategias.periodo=".$periodo." and datos.periodo=".$periodo."
+      and datos.id_indicador=".$id." and Year(datos.created_at)=".$anio."
+      LIMIT 1
+      ");
+
+      if ($estrategias==null) {
+        $estrategias="";
+      }
+      if ($observaciones==null) {
+        $observaciones="";
+      }
+
+
+
       $nombres1="";
       $nombres1=$nombres1 . '' .$nombreIndicador{0}->nombre.'';
 
@@ -188,10 +212,15 @@ class ReportesController extends Controller
       $nombreObjetivo1=$nombreObjetivo1 . '' .$nombreObjetivo{0}->objetivo.'';
 
       $meta1="";
-      $meta1=$meta1 . '' . $meta{0}->meta.'';
+      for($i = 0; $i<count($meta); $i++){
+        $meta1=$meta1 . '' . $meta{0}->meta.'';
+      }
 
       $tendencia1="";
-      $tendencia1=$tendencia1 . '' . $tendencia{0}->tendencia.'';
+      for($i = 0; $i<count($tendencia); $i++){
+        $tendencia1=$tendencia1 . '' . $tendencia{0}->tendencia.'';
+      }
+
 
       $TotaldeHombres="";
       $TotaldeHombres=$TotaldeHombres . '' .$hombres{0}->suma.'';
@@ -287,6 +316,8 @@ class ReportesController extends Controller
         ->with('anio5',json_encode($anio5))
         ->with('carreras', $carrerasV11)
         ->with('tendencia',json_encode($tendencia1))
+        ->with('estrategias',json_encode($estrategias))
+        ->with('observaciones',json_encode($observaciones))
         ->with('hombres',json_encode($TotaldeHombres))
         ->with('hombres2',json_encode($TotaldeHombres2))
         ->with('mujeres',json_encode($TotaldeMujeres))

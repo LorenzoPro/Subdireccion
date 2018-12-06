@@ -297,4 +297,44 @@ class CalidadController extends Controller
 
 
     }
+    public function ajax3($id,$periodo,$anio){
+      $estra=\DB::select("
+      SELECT id_indicador from estrategias where id_indicador=".$id." and periodo= ".$periodo." and year(estrategias.created_at)=".$anio."
+      ");
+
+      $datos=\DB::select("
+      SELECT id_indicador from datos where id_indicador=".$id." and periodo= ".$periodo." and year(datos.created_at)=".$anio."
+      ");
+      $variable="";
+      $anio2=date('Y');
+
+      if ($estra==null) {
+        $variable=1;
+      }
+      if ($datos==null) {
+        $variable=1;
+      }
+
+
+      for ($i=0; $i <count($estra) ; $i++) {
+        $bandera=false;
+        for ($y=0; $y < count($datos); $y++) {
+          if ($datos{$y}->id_indicador == $estra{$i}->id_indicador) {
+            $bandera=true;
+          }
+        }
+        if ($bandera==false) {
+          //no hay
+          $variable=1;
+        }else {
+          //si hay
+          $variable=2;
+        }
+
+
+      }
+      return $variable;
+
+
+    }
 }

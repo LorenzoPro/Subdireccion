@@ -16,9 +16,16 @@
 
 </head>
 <body>
-      <a class="navbar-brand col-md-10 col-md-offset-1" href="{{ url('/') }}">
-          <img id="midLogo" src="{{ asset('img/icons/OneamiLogoBlack.svg') }}" alt="">
-      </a>
+  <div class="col-md-12">
+    <a class="navbar-brand col-md-4" href="{{ url('/') }}">
+        <img id="midLogo" src="{{ asset('img/logotec.png') }}" alt="">
+    </a>
+    <a class="navbar-brand col-md-4 col-md-offset-4" href="{{ url('/') }}">
+        <img id="midLogo" src="{{ asset('img/logo-cabecera-derecha.png') }}" alt="">
+    </a>
+  </div>
+  <br>
+
         <!--<nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
 

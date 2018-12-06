@@ -175,6 +175,7 @@
         #customers th {
             padding-top: 10px;
             padding-bottom: 10px;
+            padding-left: 20px;
             text-align: center;
             color: black;
         }
@@ -207,12 +208,15 @@
   </head>
   <body>
 
-    <div class="" id="todo">
 
-    <div id="todo">
-      <div class="itsncg">
+
+
+       <div class="itsncg">
         INSTITUTO TECNOLÓGICO SUPERIOR DE NUEVO CASAS GRANDES
       </div >
+      <div style="border-bottom: 2px solid #f7dc6f;    width: 463px;     padding-top: 17px;">
+
+      </div>
       <div class="logo">
         <img src="{{ asset('img/logotec.png') }}" alt="" style="height: 65px;">
       </div>
@@ -265,7 +269,7 @@
               <th>H</th>
               <th>M</th>
               <th>Total desgose</th>
-              <th>Observaciones</th>
+
             </tr>
           </thead>
           <tbody>
@@ -278,11 +282,13 @@
               <td>{{ $car->hombres2 }}</td>
               <td>{{ $car->mujeres2 }}</td>
               <td>{{ $car->desglose }}%</td>
+
             </tr>
 
             @empty
               <p>Sin Registros</p>
             @endforelse
+
             <tr>
               <td id="total">Total</td>
               <td id="total">{{str_replace('"', ' ', $hombres)}}</td>
@@ -295,112 +301,114 @@
         </table>
       </div>
       <br>
-      <div class="">
-        <div class="valores contenedor">
-          DESCRIPCIÓN Y DATOS:
-        </div>
-        <div class="col-sm-9" style="border: 1px solid #000; font-size: 8px;">
-          <div class="col-sm-2" style="">
+      <div class="valores contenedor">
+        DESCRIPCIÓN Y DATOS:
+      </div>
+        <div  style="border: 1px solid #000; height: 60px; width: 80%; float:left;">
+          <div  style=" width:20%; height:50%; float:left; text-align:right; padding-top:10px;">
             Variable 1=
           </div>
-          <div class="col-sm-10" style="border-bottom: 1px solid #000; text-align:center;">
+          <div  style=" width:80%; height:50%; border-bottom: 1px solid #000; text-align:center; float:left; padding-top:10px;">
             {{str_replace('"', ' ', $variable1)}}
           </div>
-          <div class="col-sm-2">
+          <div  style=" width:20%; height:50%; float:left; text-align:right;">
             Variable 2=
           </div>
-          <div class="col-sm-10" style="text-align:center;">
+          <div  style=" width:80%; height:50%; text-align:center; float:left;">
             {{str_replace('"', ' ', $variable2)}}
           </div>
         </div>
-        <div class="col-sm-3" style="border: 1px solid #000; font-size:8px;">
-          <div class="col-sm-5">
-            <div style="border-bottom: 1px solid #000;">
+        <div  style="border: 1px solid #000; height: 60px; width: 20%; float:left;">
+          <div style="width:40%; float:left;">
+            <div style="border-bottom: 1px solid #000; height:50%; text-align:center; padding-top:10px;">
               {{str_replace('"', ' ', $TotalVariable1)}}
             </div>
-            <div>
+            <div style="text-align:center;">
               {{str_replace('"', ' ', $TotalVariable2)}}
             </div>
+
           </div>
-          <div class="col-sm-7">
+          <div style="width:60%; float:left; padding-top: 19px;">
             <div>
-              ={{str_replace('"', ' ', $porcentajeFinal1)}}%
+                ={{str_replace('"', ' ', $porcentajeFinal1)}}%
             </div>
           </div>
-
-
         </div>
-      </div>
-      <br>
-      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
       <div class="contenedor">
         COMPORTAMIENTO HISTORICO DEL INDICADOR:
       </div>
-      <div class="col-sm-12" style="border: 1px solid #000; height: 180px;">
-        <div class="col-sm-4">
-          <table id="customers2">
-            <thead>
-              <tr>
-                <th>Historial</th>
-                <th>ENE-JUL %</th>
-                <th>AGO-DIC %</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{str_replace('"', ' ', $anio5)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal5)}}%</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic5)}}%</td>
-              </tr>
-              <tr>
-                <td>{{str_replace('"', ' ', $anio4)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal4)}}%</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic4)}}%</td>
-              </tr>
-              <tr>
-                <td>{{str_replace('"', ' ', $anio3)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal3)}}%</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic3)}}%</td>
-              </tr>
-              <tr>
-                <td>{{str_replace('"', ' ', $anio2)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal2)}}%</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic2)}}%</td>
-              </tr>
-              <tr>
-                <td>{{str_replace('"', ' ', $anio)}}</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinal1)}}%</td>
-                <td>{{str_replace('"', ' ', $porcentajeFinaldic1)}}%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div  style="border: 1px solid #000; height: 180px;">
+        <div class="row">
 
-        <div class="col-sm-4" style="height:200px;">
-            <canvas id="myChartline" width="400" height="150"></canvas>
+          <div style="width:180px; float:left;">
+
+            <table id="customers2">
+              <thead>
+                <tr>
+                  <th>Historial</th>
+                  <th>ENE-JUL %</th>
+                  <th>AGO-DIC %</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{str_replace('"', ' ', $anio5)}}</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinal5)}}%</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinaldic5)}}%</td>
+                </tr>
+                <tr>
+                  <td>{{str_replace('"', ' ', $anio4)}}</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinal4)}}%</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinaldic4)}}%</td>
+                </tr>
+                <tr>
+                  <td>{{str_replace('"', ' ', $anio3)}}</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinal3)}}%</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinaldic3)}}%</td>
+                </tr>
+                <tr>
+                  <td>{{str_replace('"', ' ', $anio2)}}</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinal2)}}%</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinaldic2)}}%</td>
+                </tr>
+                <tr>
+                  <td>{{str_replace('"', ' ', $anio)}}</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinal1)}}%</td>
+                  <td>{{str_replace('"', ' ', $porcentajeFinaldic1)}}%</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+           <div style="height:200px; width:400px;float:left;margin-left:100px; padding-top:25px;">
+              <canvas id="myChartline" width="350" height="100"></canvas>
+          </div>
         </div>
       </div>
       <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
 
-      <div class="col-sm-12 contenedor">
+
+       <div class="contenedor">
         ESTRATEGIAS PARA EL CUMPLIMIENTO DE METAS:
       </div>
-      <div class="col-ms-12" style="border: 1px solid #000; height:100px;">
+      <div class="estrategias" style="border: 1px solid #000; height:100px;">
+
+      </div>
+      <div class=" contenedor">
+        OBSERVACIONES:
+      </div>
+      <div class="observaciones" style="border: 1px solid #000; height:50px;">
 
       </div>
 
 
 
-      <br>
+     <br>
       <div class="firmas">
         Responsable del Indicador
         <div class="er1">
@@ -419,10 +427,10 @@
 
 
 
-    </div>
-  </div>
 
-</div>
+
+
+
 
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -439,6 +447,17 @@
 
   $(document).ready( function(){
 
+    var estra = {!!$estrategias!!}
+    var e = estra[0];
+    var es = e.estrategias;
+    $('.estrategias').empty();
+    $('.estrategias').append(es);
+    var obser = {!!$observaciones!!}
+    var ob = obser[0];
+    var o = ob.observaciones;
+    $('.observaciones').empty();
+    $('.observaciones').append(o);
+    console.log(0);
     var ctxline = document.getElementById("myChartline");
     var myChartline = new Chart(ctxline, {
         type: 'line',

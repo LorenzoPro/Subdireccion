@@ -111,7 +111,7 @@
 <br>
 <div class="row">
   <div class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
-    <button type="submit" name="button" class="btn btn-success estra" data-toggle="modal" data-target=".estrategias" style="width: 100%; margin:3px;" ><i class="fas fa-plus"></i>&nbsp;Agregar Estrategias</button>
+    <button type="submit" name="button" class="btn btn-success estra " id="estra" data-toggle="modal" data-target=".estrategias" style="width: 100%; margin:3px;" ><i class="fas fa-plus"></i>&nbsp;Agregar Estrategias</button>
     <button type="submit" name="button" class="btn btn-danger eliminar" style="width: 100%; margin:3px;" ><i class="fas fa-trash-alt"></i>&nbsp;Eliminar Indicador</button>
     <button type="submit" name="button" class="btn btn-info reportes" style="width: 100%; margin:3px;" ><i class="fas fa-print"></i>&nbsp;Imprimir Reporte</button>
   </div>
@@ -220,7 +220,7 @@
 
             <div class="from-group">
                 <input type="hidden" name="id_indicador" class="id_indicador" value="1"><br>
-                <input type="hidden" name="periodo" class="periodo" id="periodotext" value="0"><br>
+                <input type="hidden" name="periodo" class="periodos" id="periodotext" value="0"><br>
               <h3 for="">{{$car->nombre}}</h3><br>
               <h5 for="" style="text-align: center;">Variable 1</h5>
               Hombres
@@ -275,12 +275,12 @@
 
 
     console.log(id);
-    $.ajax({
-      url:'/administracion/calidad/index/'+id+"/"+periodo+"/"+anio,
-      method:'get',
-    }).done(function(res){
-
-    });
+    // $.ajax({
+    //   url:'/administracion/calidad/index/'+id+"/"+periodo+"/"+anio,
+    //   method:'get',
+    // }).done(function(res){
+    //
+    // });
     $(".btnmetas").on("click", function(){
       x=1;
     });
@@ -289,20 +289,21 @@
 window.location.href = "administracion";
     });
 
-    $(".indicador").on("click", function(){
-      id = $(this).data('id');
+    $("#indicador").on("change", function(){
+      id = $(this).val();
       periodo=periodo;
       console.log(id);
       var id2 = $(this).data('id2');
       $("#id_indicador").val(id);
-      $(".id_indicador").val(id2);
+      $(".id_indicador").val(id);
     });
 
-    $(".periodo").on("click", function(){
+    $("#periodo").on("change", function(){
       var id2 = id;
-      periodo = $(this).data('periodo');
+      periodo = $(this).val();
       console.log(periodo);
       //$(".periodo").val(periodo);
+
       $(".periodos").val(periodo);
     });
     $('.anio').keyup(function(){
@@ -330,6 +331,7 @@ window.location.href = "administracion";
       carreras();
       periodos();
       verificar();
+      verificar2();
 
       $('.subtitle').fadeOut(1);
       $('.subtitle').fadeIn(1000);
@@ -399,6 +401,19 @@ window.location.href = "administracion";
 
         }else {
           $("#btnmeta").fadeOut(1000);
+        }
+      });
+    }
+    function verificar2(){
+      $.ajax({
+        url:'/administracion/calidad/ajax3/'+id+"/"+periodo+"/"+anio,
+        method:'get',
+      }).done(function(res){
+        console.log(res);
+        var x = parseInt(res);
+        if (x==2) {
+          $("#estra").fadeOut(100);
+
         }
       });
     }

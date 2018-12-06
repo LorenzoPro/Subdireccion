@@ -132,7 +132,36 @@
               <tr>
                 @if($usu->id==$asi->id)
                 <th>{{ $asi->nombre }}</th>
-                <th></th>
+                <th>
+                  <button class="btn" type="button" data-toggle="modal" data-target=".eliminar2{{ $asi->id_indicador }}">
+                    <i class="fas fa-trash"></i>
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade eliminar2{{ $asi->id_indicador }}" role="dialog">
+                    <div class="modal-dialog">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Eliminando Asignación:{{ $asi->nombre }}</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>¿Estás seguro/a de que deseas eliminarlo?</p>
+                        </div>
+                        <div class="modal-footer">
+
+                          <!--{!!  Form::open(array( 'route'=>['admin.usuarios.store','post'] ))  !!}-->
+                          {!!  Form::open(array( 'route'=>['admin.asignaciones.destroy', $asi->id_asignaciones], 'method'=>'delete' ))  !!}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" name="btnborrar" class="btn btn-danger">Eliminar</button>
+                          {!!  Form::close()  !!}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th>
               </tr>
                 @endif
               @empty

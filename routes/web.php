@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 
@@ -52,6 +52,7 @@ Route::group(['prefix'=>'administracion','as'=>'admin.'], function(){
   //Route::get('/calidad/Graficas','CalidadController@Graficas');
   Route::get('/calidad/Graficas/{id}/{periodo}/{anio}','CalidadController@Graficas');
   Route::get('/calidad/ajax2/{id}/{periodo}/{anio}','CalidadController@ajax2');
+  Route::get('/calidad/ajax3/{id}/{periodo}/{anio}','CalidadController@ajax3');
   Route::get('/calidad/carreras/{id}/{periodo}/{anio}','CalidadController@carreras');
   Route::get('/calidad/porcentaje/{id}/{periodo}/{anio}','CalidadController@porcentaje');
   Route::get('/calidad/index/{id}/{periodo}/{anio}','ReportesController@index');

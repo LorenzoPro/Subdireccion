@@ -38,4 +38,11 @@ class AsignacionesController extends Controller
 
     }
   }
+  public function destroy($id){
+    //Consulta directamente al modelo, usaremos este manera para borrar las imagenes
+    $usuario = Asignaciones::find($id);
+    $usuario->delete();
+    return redirect('/administracion/usuarios/');
+
+  }
 }
